@@ -1,0 +1,7 @@
+from app import db, User
+u = User()
+u.name = 'ra'
+u.email = '
+u.pass
+db.session.add(user)
+db.session.commit()
