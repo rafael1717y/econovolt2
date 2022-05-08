@@ -19,17 +19,15 @@ Bootstrap(app)
 
 @login_manager.user_loader
 def current_user(user_id):
-    return User.query.get(user_id)
+    return Users.query.get(user_id)
 
 
-class User(db.Model, UserMixin):
+class Users(db.Model, UserMixin):
     __tablename = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(84), nullable=False)
     email = db.Column(db.String(84), nullable=False, unique=True, index=True)
     password = db.Column(db.String(255), nullable=False)
-
-
    
     def __str__(self):
         return self.name
@@ -41,14 +39,14 @@ class User(db.Model, UserMixin):
 
 @app.route("/")  # users
 def index():
-    users = User.query.all()   # select * from users;
+    users = Users.query.all()   # select * from users;
     return render_template("users.html", users=users)
 
 
 @app.route("/user/<int:id>")  # user
 @login_required                 ### TODO
 def unique(id):
-    user = User.query.get(id)
+    user = Users.query.get(id)
     return render_template("user.html", user=user)
 
 
@@ -57,7 +55,7 @@ def unique(id):
 # Deletar um usuário -- simulações depois
 @app.route("/user/delete/<int:id>")
 def delete(id):
-    user = User.query.filter_by(id=id).first()
+    user = Users.query.filter_by(id=id).first()
     db.session.delete(user)
     db.session.commit()
     return redirect("/")
@@ -73,12 +71,12 @@ def response():
     return render_template("response.html")
 
 
-@app.route("/simulacoes")
-@app.route("/simulacoes/<int:id>")
-@login_required     # somente usuários logados podem ver simulações
-def posts(id):
+@app.route("/users")
+@app.route("/users/<int:id>")
+#@login_required     # somente usuários logados podem ver simulações
+def users(id):
     titulo = request.args.get("titulo")
-    data = dict(
+    user = dict(
         path = request.path, 
         referrer=request.referrer, 
         content_type=request.content_type, 
@@ -86,13 +84,13 @@ def posts(id):
         titulo = titulo, 
         id = id if id else 0
     )
-    return data
+    return render_template("users.html", user=user)
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        user = User()
+        user = Users()
         user.name = request.form["name"]
         user.email = request.form["email"]
         user.password = generate_password_hash(request.form["password"])
@@ -109,7 +107,7 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
 
-        user = User.query.filter_by(email=email).first()
+        user = Users.query.filter_by(email=email).first()
         #errors = {}
 
         if not user:
@@ -134,6 +132,10 @@ def logout():
 
 # TODO: enviar resultados simulações calculados em uma rota para o template
 
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 # ------------------------
 if __name__ == "__main__":

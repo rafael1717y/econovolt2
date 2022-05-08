@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Econovolt</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    {% endblock head %}
+
+    {% block extra_css %} {% endblock extra_css %}
+
+</head>
+
+<body>
+    
+    {% block nav %}
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <strong>Econovolt</strong>
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" >
+                    Home
+                </a>
+
+                <a class="navbar-item" ref="{{ url_for('users') }}"> 
+                    Usuários
+                </a>
+
+                <a class="navbar-item" href="{{ url_for('about') }}">
+                    Sobre
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Simulações
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">
+                            Item 1
+                        </a>
+                        <a class="navbar-item">
+                            
+                        </a>
+                        <a class="navbar-item">
+                            Item 2
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Item 3
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary" href="{{ url_for('register') }}">
+                            <strong>Cadastrar</strong>
+                        </a>
+                        <a class="button is-light" href="{{ url_for('login') }}">
+                            Entrar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endblock nav %}
+
+    {% block top %}
+    {% endblock top %}
+
+
+    
+
+
+
+
+
+
+    <section class="section">
+        <div class="container">
+        {% block main %}
+    
+        {% endblock main %}
+        </div>
+    </section>
+
+    {% block footer %}
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Econovolt</strong> by <a href="https://jgthms.com">Grupo PI 63</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+            </p>
+        </div>
+    </footer>
+
+    {% endblock footer %}
+</body>
+
+</html>
