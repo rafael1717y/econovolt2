@@ -96,6 +96,7 @@ def register():
         user.password = generate_password_hash(request.form["password"])
         db.session.add(user)
         db.session.commit()
+        flash("Usuário criado com sucesso!")
         return redirect(url_for("index"))
     return render_template("register.html")
 
@@ -111,7 +112,7 @@ def login():
         #errors = {}
 
         if not user:
-            
+            flash('Email inválido.')
             return redirect(url_for("login"))
 
         if not check_password_hash(user.password, password):
@@ -119,7 +120,7 @@ def login():
             return redirect(url_for("login"))
         
         login_user(user)
-        return redirect(url_for("index"))
+        return redirect(url_for("simulator"))
 
     return render_template("login.html")
 
@@ -128,7 +129,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return render_template("login.html")
+    return render_template("users.html")
 
 # TODO: enviar resultados simulações calculados em uma rota para o template
 
@@ -136,6 +137,14 @@ def logout():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route('/simulator')  # se logado vai pra página de simulação
+@login_required
+def simulator():
+    flash("Bem-vindo ao simulador!!!!!")
+    return render_template("simulator.html")
+
 
 # ------------------------
 if __name__ == "__main__":
