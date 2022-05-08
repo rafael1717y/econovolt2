@@ -1,122 +1,36 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios cadastrados</title>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-                    {% if not current_user.is_authenticated %}                    
-                        </button> <a class="navbar-brand" href="{{ url_for('register') }}"><strong>Cadastrar</strong></a>
-                        </button> <a class="navbar-brand" href="{{ url_for('login') }}"><strong>Entrar</strong></a>
-                    {% else %}
-                        </button> <a class="navbar-brand" href="{{ url_for('logout') }}"><strong>Sair</strong></a>
-                    {% endif %}              
-                </nav>
+{% block top %}
 
 
-                <div class="jumbotron">
-                    <h2>
-                        Econovolt
-                    </h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        <a class="btn btn-primary btn-large" href="#">Saiba mais</a>
-                    </p>
+
+{% for user in users %}
+<div class="column">
+    <div class="card">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                    </figure>
                 </div>
-                
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>
-                                <p><strong>Últimas simulações realizadas:</strong></p>
-                            </h3>
-                        </div>
-                    </div>
+                <div class="media-content">
+                    <h2>  {{ user.name }} </h2>
                 </div>
+            </div>
 
-                {% for user in users %}
-                 <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="jumbotron">
-                                    <h2>
-                                        {{ user.name }}
-                                    </h2>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    </p>
-                                    <p>
-                                        <a class="btn btn-primary btn-large" href="#">Learn more</a>
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="col-md-4">
-                                <div class="jumbotron">
-                                    <h2>
-                                        Hello, world!
-                                    </h2>
-                                    <p>
-                                        This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-                                    </p>
-                                    <p>
-                                        <a class="btn btn-primary btn-large" href="#">Learn more</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-
-                {% endfor %}
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#">Anterior</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">4</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">5</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Próximo</a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                <a href="#">#css</a> <a href="#">#responsive</a>
+                <br>
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
             </div>
         </div>
     </div>
 
-    
+</div>
 
-   
+{% endfor %}
+{% endblock top %}
 
-</body>
-</html>
-
-{% endblock content %}

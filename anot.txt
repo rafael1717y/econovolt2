@@ -1,5 +1,7 @@
 from app import db, User
-u = User()
+db.create_all()
+
+u = Users()
 u.name = 'ra'
 u.email = '
 u.pass
