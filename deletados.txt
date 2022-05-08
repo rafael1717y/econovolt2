@@ -1,39 +1,7 @@
-from flask import Flask, request, redirect, url_for, render_template, flash
-from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
 
-
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'test-development'
-
-
-db = SQLAlchemy(app)
-login_manager = LoginManager(app)
-Bootstrap(app)
-
-
-@login_manager.user_loader
-def current_user(user_id):
-    return Users.query.get(user_id)
-
-
-class Users(db.Model, UserMixin):
-    __tablename = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(84), nullable=False)
-    email = db.Column(db.String(84), nullable=False, unique=True, index=True)
-    password = db.Column(db.String(255), nullable=False)
-   
-    def __str__(self):
-        return self.name
-
-
-
+@app.route('/index')
+def index2():
+    return render_template('index.html')
 
 
 
@@ -104,25 +72,17 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-
-        user = Users.query.filter_by(email=email).first()
-        #errors = {}
-
-        if not user:
-            flash('Email inválido.')
-            return redirect(url_for("login"))
-
-        if not check_password_hash(user.password, password):
-            flash("Credencias inválidas.")
-            return redirect(url_for("login"))
-        
-        login_user(user)
-        return redirect(url_for("simulator"))
-
-    return render_template("login.html")
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash("Nome ou senha inválido!")
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Entrar', form=form)
 
 
 @app.route("/logout")
@@ -145,7 +105,3 @@ def simulator():
     flash("Bem-vindo ao simulador!!!!!")
     return render_template("simulator.html")
 
-
-# ------------------------
-if __name__ == "__main__":
-    app.run()
