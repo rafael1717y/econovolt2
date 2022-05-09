@@ -1,4 +1,7 @@
 
+
+ web flask; gunicorn econovolt:app 
+
 @app.route('/index')
 def index2():
     return render_template('index.html')
