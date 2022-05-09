@@ -1,112 +1,54 @@
-<!DOCTYPE html>
-<html>
+{% extends 'bootstrap/base.html' %}
 
-<head>
-    {% block head %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Econovolt</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    {% endblock head %}
+{% block title %}
+    {% if title %}{{ title }} - Econovolt {% else %}Bem vindo ao Econovolt{% endif %}
+{% endblock %}
 
-    {% block extra_css %} {% endblock extra_css %}
-
-</head>
-
-<body>
-    
-    {% block nav %}
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="#">
-                <strong>Econovolt</strong>
-            </a>
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href ="{{ url_for('index') }}">
-                    Home
-                </a>
-           
-
-                <a class="navbar-item" href="{{ url_for('about') }}">
-                    Sobre
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Simulações
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Item 1
-                        </a>
-                        <a class="navbar-item">
-                            
-                        </a>
-                        <a class="navbar-item">
-                            Item 2
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Item 3
-                        </a>
-                    </div>
-                </div>
+{% block navbar %}
+    <nav class="navbar navbar-default" >
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index') }}">Econovolt</a>
             </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary" href="{{ url_for('register') }}"><strong>Cadastrar</strong></a>
-                                          </a>
-                        {% if current_user.is_anonymous %}
-                        <a class="button is-light" href="{{ url_for('login') }}">Entrar</a>
-                        {% else %}
-                        <a class="button is-light" href="{{ url_for('logout') }}">Sair</a>
-                        {% endif %}
-
-                    </div>
-                </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('register') }}"><strong>Cadastrar</strong></a></li>
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('login') }}">Entrar</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('logout') }}">Sair</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('about') }}">Sobre</a></li>
+                </ul>
             </div>
         </div>
     </nav>
-    {% endblock nav %}
+{% endblock %}
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+{% block content %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
 
 
-    {% block content %} {% endblock %}
 
     
-
-    {% block footer %}
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>
-                <strong>Econovolt</strong> - Projeto Integrador 2022 - Grupo 63</a>
-            </p>
-        </div>
-    </footer>
-
-    {% endblock footer %}
-</body>
-
-</html>

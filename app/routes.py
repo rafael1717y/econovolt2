@@ -10,7 +10,7 @@ from app.models import User
 def index():
     #users = Users.query.all()   # select * from users;
     #return render_template("users.html", users=users)
-    return render_template("base.html")
+    return render_template("index.html")
 
 
 @login_required  # um usuário logado pode ver sua simulação
