@@ -63,7 +63,15 @@ def about():
     return render_template("about.html")
 
 
-
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    simulations  = [
+        {'author': user, 'body': 'Simulação #1'},
+        {'author': user, 'body': 'Simulação #2'}
+    ]
+    return render_template('user.html', user=user, simulations=simulations)
 
 # TODO: enviar resultados simulações calculados em uma rota para o template
 
