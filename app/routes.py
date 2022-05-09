@@ -13,11 +13,11 @@ def index():
     return render_template("base.html")
 
 
-#@login_required  # um usuário logado pode ver sua simulação
+@login_required  # um usuário logado pode ver sua simulação
 @app.route('/simulations')
 def simulations():
-    # retrun render_template(url_for('simulations', title='Simulações', simualations=simulations))
-    return render_template('simulations.html')
+    # return render_template(url_for('simulations', title='Simulações', simulations=simulations))
+    return render_template('simulations.html', title='Simulações')
 
 
 
@@ -29,11 +29,11 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Nome de usuário ou senha inválido(s)')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        return render_template('simulations.html')
-    return render_template('login.html', title='Sign In', form=form)
+        return render_template('simulations.html')   # TODO usar url_for
+    return render_template('login.html', title='Entrar', form=form)
 
 
 @app.route('/logout')
@@ -52,9 +52,9 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Você agora está cadastrado!')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='Cadastrar', form=form)
 
 
 
