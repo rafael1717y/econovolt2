@@ -11,5 +11,14 @@
             {{ wtf.quick_form(form) }}
         </div>
     </div>
-    </div>
+    <p>
+        <br>
+        Esqueceu sua senha?
+        <a href="{{ url_for('reset_password_request') }}">Clique aqui</a>
+    </p>
+</div>
+
+
+
+
 {% endblock %}

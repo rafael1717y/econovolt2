@@ -7,12 +7,11 @@ from flask_bootstrap import Bootstrap
 import logging
 from logging.handlers import RotatingFileHandler
 import os
-
+from flask_mail import Mail
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
 
 
 # Registro das extensões
@@ -20,22 +19,30 @@ app.config.from_object(Config)
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = "login"
 
-if not app.debug:    
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/econovolt.log', maxBytes=10240,
-    backupCount=10)
-    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+
+# Logs
+# ----
+if not app.debug:
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+    file_handler = RotatingFileHandler(
+        "logs/econovolt.log", maxBytes=10240, backupCount=10
+    )
+    file_handler.setFormatter(
+        logging.Formatter(
+            "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"
+        )
+    )
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Econovolt startup')
+    app.logger.info("Econovolt startup")
 
 
-
-# Depois da instância da aplicação criada: 
+# Depois da instância da aplicação criada:
 # ----------------------------------------
 from app import routes, models, errors
