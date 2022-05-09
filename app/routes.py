@@ -4,58 +4,58 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.forms import ResetPasswordRequestForm, ResetPasswordForm
+from app.email import send_password_reset_email
 
 
 @app.route("/")  # users
 def index():
-    #users = Users.query.all()   # select * from users;
-    #return render_template("users.html", users=users)
+    # users = Users.query.all()   # select * from users;
+    # return render_template("users.html", users=users)
     return render_template("index.html")
 
 
 @login_required  # um usuário logado pode ver sua simulação
-@app.route('/simulations')
+@app.route("/simulations")
 def simulations():
     # return render_template(url_for('simulations', title='Simulações', simulations=simulations))
-    return render_template('simulations.html', title='Simulações')
+    return render_template("simulations.html", title="Simulações")
 
 
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Nome de usuário ou senha inválido(s)')
-            return redirect(url_for('login'))
+            flash("Nome de usuário ou senha inválido(s)")
+            return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
-        return render_template('simulations.html')   # TODO usar url_for
-    return render_template('login.html', title='Entrar', form=form)
+        return render_template("simulations.html")  # TODO usar url_for
+    return render_template("login.html", title="Entrar", form=form)
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Você agora está cadastrado!')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Cadastrar', form=form)
-
+        flash("Você agora está cadastrado!")
+        return redirect(url_for("login"))
+    return render_template("register.html", title="Cadastrar", form=form)
 
 
 @app.route("/about")
@@ -63,16 +63,46 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/user/<username>')
+@app.route("/user/<username>")
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    simulations  = [
-        {'author': user, 'body': 'Simulação #1'},
-        {'author': user, 'body': 'Simulação #2'}
+    simulations = [
+        {"author": user, "body": "Simulação #1"},
+        {"author": user, "body": "Simulação #2"},
     ]
-    return render_template('user.html', user=user, simulations=simulations)
-
-# TODO: enviar resultados simulações calculados em uma rota para o template
+    return render_template("user.html", user=user, simulations=simulations)
 
 
+@app.route("/reset_password_request", methods=["GET", "POST"])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash(
+            "As instruções para a criação de uma nova senha foram enviadas para o seu email."
+        )
+        return redirect(url_for("login"))
+    return render_template(
+        "reset_password_request.html", title="Criar nova senha", form=form
+    )
+
+
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for("index"))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Sua senha foi alterada.")
+        return redirect(url_for("login"))
+    return render_template("reset_password.html", form=form)
