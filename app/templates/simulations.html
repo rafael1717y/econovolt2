@@ -1,7 +1,20 @@
-<h1>Simulações do usuário:</h1>
+{% extends 'base.html' %}
+
+
 
 {% block content %}
 
-<h1>Olá, {{ current_user.username }}</h1>
+<div>
+    <h1><strong>Olá, {{ current_user.username }}</strong></h1>
+
+    <h2>Últimas simulações realizadas: </h2><br>
+    <p> Simulação I</p><br>
+    <p> Simulação II</p><br>
+    <p> Simulação III </p> <br>
+    <!--for simulacao in... -->
+</div>
+
+
+
 
 {% endblock %}

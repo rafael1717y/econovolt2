@@ -67,18 +67,14 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        {% if not current_user.is_authenticated %}
-                        <a class="button is-primary" href="{{ url_for('register') }}">
-                            <strong>Cadastrar</strong>
-                        </a>
-                        <a class="button is-light" href="{{ url_for('login') }}">
-                            Entrar
-                        </a>
-                       
-                        <a class="button is-light" href="{{ url_for('logout') }}">
-                            Sair
-                        </a>
+                        <a class="button is-primary" href="{{ url_for('register') }}"><strong>Cadastrar</strong></a>
+                                          </a>
+                        {% if current_user.is_anonymous %}
+                        <a class="button is-light" href="{{ url_for('login') }}">Entrar</a>
+                        {% else %}
+                        <a class="button is-light" href="{{ url_for('logout') }}">Sair</a>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -97,25 +93,9 @@
     {% endwith %}
 
 
-
-    {% block top %}
-    {% endblock top %}
-
+    {% block content %} {% endblock %}
 
     
-
-
-
-
-
-
-    <section class="section">
-        <div class="container">
-        {% block main %}
-    
-        {% endblock main %}
-        </div>
-    </section>
 
     {% block footer %}
     <footer class="footer">
