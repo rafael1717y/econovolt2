@@ -1,6 +1,26 @@
-{% extends 'base.html' %}
-
 {% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body>
+    
+    <header class="cabecalho">
+        <img class="cabecalho-imagem"  src="{{ url_for('static', filename= 'img/logo.jpeg') }}" alt="Logo Empresa">
+       
+        <nav class="cabecalho-menu">
+            <a class="cabecalho-menu-item" href="{{ url_for('about') }}">Sobre</a>     
+            <a class="cabecalho-menu-item" href="{{ url_for('register')}} ">Cadastrar</a>
+            <a class="cabecalho-menu-item" href="{{ url_for('login') }}">Entrar</a></li>
+                         
+        </nav>
+    </header>
+{% endblock %}
+
 
 {% block app_content %}
 
