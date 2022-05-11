@@ -1,67 +1,20 @@
 {% extends 'base.html' %}
-
 {% set active_page = 'home' %}
-
 {% block content %}
-  <div class="row">
-    <div class="col-lg-3">
-      <div class="my-4">
-          <br>
-        <h1>Econovolt</h1>
-      </div>
-    </div>
-    
-    <div class="col-lg-9">
-      <div class="row my-5 card-wrapper">
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-              <div class="embed-responsive embed-responsive-16by9">
-                <a href="#">
-                  <img class="card-img-top embed-responsive-item" src="{{ url_for('static', filename='img/img3.jpeg') }}">
-                </a>
-              </div>
-                            
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-              <div class="embed-responsive embed-responsive-16by9">
-                <a href="#">
-                  <img class="card-img-top embed-responsive-item" src="{{ url_for('static', filename='img/img2.jpeg') }}">
-                </a>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Dicas</a>
-                </h4>
-                <h5>..</h5>
-                <p class="card-text">...</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">...</small>
-              </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-              <div class="embed-responsive embed-responsive-16by9">
-                <a href="#">
-                  <img class="card-img-top embed-responsive-item" src="{{ url_for('static', filename='img/img1.jpeg') }}">
-                </a>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="{{ url_for('about') }}" class="nav-link">Sobre</a>
-                </h4>
-                <h5>..</h5>
-                <p class="card-text">..</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted"></small>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
+
+<br>
+<br>
+
+  <div class="container">
+    <h1><strong>Econovolt</strong> </h1>
+    <h2>Simulador de Consumo Residencial</h2>
   </div>
+
+<div class="container">
+  <a href="{{ url_for('index') }}" class="navbar-brand">
+    <img src="{{ url_for('static', filename='img/imagem_principal.jpg') }}" height="700px">
+  </a>
+</div>
+
+
 {% endblock %}
