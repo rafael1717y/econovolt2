@@ -4,9 +4,9 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
-from app.forms import ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NewSimulationForm
 from app.email import send_password_reset_email
-
+import pdb
 
 @app.route("/")  # users
 def index():
@@ -106,3 +106,15 @@ def reset_password(token):
         flash("Sua senha foi alterada.")
         return redirect(url_for("login"))
     return render_template("reset_password.html", form=form)
+
+
+# View para realizar uma simulação
+@app.route("/new_simulation", methods=["GET", "POST"])
+def new_simulation():
+    #pdb.set_trace()
+    form = NewSimulationForm()
+    if request.method == "POST":
+        print(form.item.data,
+              form.quantidade.data)
+        return redirect(url_for("index"))
+    return render_template("new_simulation.html", form=form)
