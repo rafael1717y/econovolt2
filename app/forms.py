@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField, SelectField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -47,3 +47,21 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Por favor, use um email diferente.")
+
+
+class NewSimulationForm(FlaskForm):
+        # as categorias deverão vir do db?? Colocar apenas itens maior consumo??
+        # Para um item -- ou um for com o num itens??
+        item_1 = SelectField("Itens", choices=["Geladeira", "Umidificador", "Chuveiro"], option_widget=None, validate_choice=True)
+        quantidade_1 = SelectField("Quantidade", choices=["1", "2", "3", "4", "5"], option_widget=None, validate_choice=True)
+        tempo_de_uso_1 = IntegerField("Tempo de uso em minutos")
+        potencia_1= IntegerField("Potência")
+
+        item_2 = SelectField("Itens", choices=["Geladeira", "Umidificador", "Chuveiro"], option_widget=None, validate_choice=True)
+        quantidade_2 = SelectField("Quantidade", choices=["1", "2", "3", "4", "5"], option_widget=None, validate_choice=True)
+        tempo_de_uso_2 = IntegerField("Tempo de uso em minutos")  # ou horas
+        potencia_2= IntegerField("Potência")
+
+
+
+        submit = SubmitField("Adicionar")

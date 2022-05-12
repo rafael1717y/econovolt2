@@ -24,8 +24,9 @@ login = LoginManager(app)
 login.login_view = "login"
 
 
-# Logs
-# ----
+# Boilerplate de Logs
+# -------------------
+# TODO: transformação em uma função
 if not app.debug:
     if not os.path.exists("logs"):
         os.mkdir("logs")
@@ -34,13 +35,14 @@ if not app.debug:
     )
     file_handler.setFormatter(
         logging.Formatter(
-            "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"
+            '%(asctime)s  %(name)s  %(levelname)s'
+            'l:%(lineno)d f:%(filename)s: %(message)s'
         )
     )
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
-    app.logger.info("Econovolt startup")
+    app.logger.info("A aplicação Econovolt iniciou...")
 
 
 # Depois da instância da aplicação criada:
