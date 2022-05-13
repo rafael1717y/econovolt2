@@ -1,4 +1,5 @@
-from flask import render_template, flash, redirect, url_for, request
+import json
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -109,6 +110,7 @@ def reset_password(token):
 
 
 # View para realizar uma simulação
+"""
 @app.route("/new_simulation", methods=["GET", "POST"])
 def new_simulation():
     #pdb.set_trace()
@@ -118,3 +120,30 @@ def new_simulation():
               form.quantidade.data)
         return redirect(url_for("index"))
     return render_template("new_simulation.html", form=form)
+"""
+# 
+@app.route("/new_simulation", methods=["GET", "POST"])
+def new_simulation():
+    return render_template('new_simulation.html')
+
+
+simulations = []
+def guardar(email):
+    simulations.append(email)
+    print('134', simulations)
+
+
+# Ainda que não esteja submetendo os dados eles estão no form data. 
+@app.route('/process', methods=['POST'])
+def process():
+    email = request.form['email']
+    name = request.form['name']
+    print('linha 135', email)
+    print('linha 136', name)
+    if (name and email):  ## validac e calc aqui >> simulacoes >> resultado no final
+        msg = 'Dados incluídos com sucesso. '
+        guardar(email)
+        return jsonify({'name': name, 'email': email, 'msg': msg})
+    return jsonify({'error': 'Faltando dados!'})
+
+
