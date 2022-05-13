@@ -1,13 +1,16 @@
 import json
+from turtle import title
+from urllib import response
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Simulation
 from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NewSimulationForm
 from app.email import send_password_reset_email
 import pdb
+
 
 @app.route("/")  # users
 def index():
@@ -122,17 +125,19 @@ def new_simulation():
     return render_template("new_simulation.html", form=form)
 """
 # 
+"""
 @app.route("/new_simulation", methods=["GET", "POST"])
 def new_simulation():
     return render_template('new_simulation.html')
-
+"""
 
 simulations = []
 def guardar(email):
     simulations.append(email)
     print('134', simulations)
 
-
+# ------------------------------------------------------------------------------
+# Ajax
 # Ainda que não esteja submetendo os dados eles estão no form data. 
 @app.route('/process', methods=['POST'])
 def process():
@@ -146,4 +151,63 @@ def process():
         return jsonify({'name': name, 'email': email, 'msg': msg})
     return jsonify({'error': 'Faltando dados!'})
 
+# ------------------------------------------------------------------------------
 
+
+# Inclusão dos itens para simulação (redirect pra new_simulation sempre)
+# TODO condição de parada para usuário. Ver resultado
+# TODO Usar Wtforms
+@app.route('/new_simulation', methods=['GET', 'POST'])
+def new_simulation():
+    form = NewSimulationForm()
+    if form.validate_on_submit():
+        simulation = Simulation(item=form.item.data, quantity=form.quantity.data)
+        db.session.add(simulation)
+        db.session.commit()
+        flash('Simulação adicionada.')
+        #calcularcusto()
+        return redirect(url_for('new_simulation'))
+    
+    simulations = [
+        {
+        'author': {'username': 'John'},
+        'item': 'geladeira',
+        'quantity': '1'},
+
+        {'author': {'username': 'Susan'},
+        'item': 'computador',
+        'quantity': '2', 
+        }
+    ]
+    return render_template('teste.html', title='Simulações', form=form, simulations=simulations)
+    
+# 2. Exibe o resultado das simulações após cálculo [método para calcular custo na classe Simulation]
+@app.route('/display_simulations', methods=['GET', 'POST'])
+def display_simulations():
+    simulations = Simulation.query.all()
+    #simulations = [
+    #    {"author": user, "body": "Simulação #1"},
+    #    {"author": user, "body": "Simulação #2"},
+    #]
+    return render_template("display_simulations.html", user=user, simulations=simulations)
+
+
+
+    
+    """
+    form = NewSimulationForm()
+    simulation = Simulation(item=form.post.data, quantity=form.post.data, author=current_user)
+    db.session.add(simulation)
+    db.session.commit()
+    flash('Simulação adicionada.')
+    return render_template('new_simulation.html')
+
+    simulations = [
+        {
+            'author': {'username': 'John'},
+            'item': {'geladeira'},
+            'quantity': {1},
+        }
+    ]
+    return render_template('index.html', title='Home Page', form=form, simulations=simulations)
+    """

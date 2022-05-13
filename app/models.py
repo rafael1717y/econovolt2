@@ -1,3 +1,5 @@
+from email.policy import default
+from linecache import lazycache
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -6,6 +8,7 @@ from hashlib import md5
 import jwt
 from app import app
 from time import time
+from datetime import datetime
 
 
 class User(UserMixin, db.Model):
@@ -13,6 +16,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    simulations = db.relationship('Simulation', backref='author', lazy='dynamic')
+
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -47,7 +52,24 @@ class User(UserMixin, db.Model):
         return "<User {}>".format(self.username)
 
 
-## Fora da classe
+class Simulation(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     item = db.Column(db.String(120), index=True)
+     quantity = db.Column(db.Integer)
+     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+     def __repr__(self):
+         return "Item incluído para simulação >>> {}".format(self.item)  # retorna simul. item
+
+     def calcular_custo(self):
+            print('Calculando custo')
+
+    
+    #s = Simulation(item='geladeira', quantity=1, author=u)
+
+    
+# Fora da classe
 # ---------------
 @login.user_loader  # da classe
 def load_user(id):
