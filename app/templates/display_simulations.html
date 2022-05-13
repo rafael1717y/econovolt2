@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hi, {{ current_user.username }}!</h1>
+{% for simulation in simulations  %}
+<div><p>{{ simulation }} </p><div>
+{% endfor %}
+{% endblock %}

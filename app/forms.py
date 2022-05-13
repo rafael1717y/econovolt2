@@ -53,5 +53,5 @@ class NewSimulationForm(FlaskForm):
         # as categorias deverão vir do db?? Colocar apenas itens maior consumo??
         # Para um item -- ou um for com o num itens??
         item = SelectField("Itens", choices=["Geladeira", "Umidificador", "Chuveiro"], option_widget=None, validate_choice=True)
-        potencia= IntegerField("Potência")
+        quantity = IntegerField("Quantidade")
         submit = SubmitField("Adicionar")
