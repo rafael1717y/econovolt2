@@ -135,6 +135,7 @@ def guardar(email):
 # ------------------------------------------------------------------------------
 # Ajax
 # Ainda que não esteja submetendo os dados eles estão no form data. 
+@login_required
 @app.route('/process', methods=['POST'])
 def process():
     email = request.form['email']
@@ -153,6 +154,7 @@ def process():
 # Inclusão dos itens para simulação (redirect pra new_simulation sempre)
 # TODO condição de parada para usuário. Ver resultado
 # TODO Usar Wtforms
+@login_required
 @app.route('/new_simulation', methods=['GET', 'POST'])
 def new_simulation():
     form = NewSimulationForm()
@@ -178,7 +180,7 @@ def new_simulation():
     return render_template('teste.html', title='Simulações', form=form, simulations=simulations)
     
 # 2. Exibe o resultado das simulações após cálculo [método para calcular custo na classe Simulation]
-#@login_required
+@login_required
 @app.route('/display_simulations', methods=['GET', 'POST'])
 def display_simulations():
     simulations = Simulation.query.all()
@@ -188,7 +190,7 @@ def display_simulations():
     #]
     return render_template("display_simulations.html", user=user, simulations=simulations)
 
-#@login_required
+@login_required
 @app.route('/display')
 def display():
     return redirect(url_for('display_simulations'))
