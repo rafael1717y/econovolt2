@@ -178,6 +178,7 @@ def new_simulation():
     return render_template('teste.html', title='Simulações', form=form, simulations=simulations)
     
 # 2. Exibe o resultado das simulações após cálculo [método para calcular custo na classe Simulation]
+#@login_required
 @app.route('/display_simulations', methods=['GET', 'POST'])
 def display_simulations():
     simulations = Simulation.query.all()
@@ -187,7 +188,10 @@ def display_simulations():
     #]
     return render_template("display_simulations.html", user=user, simulations=simulations)
 
-
+#@login_required
+@app.route('/display')
+def display():
+    return redirect(url_for('display_simulations'))
 
     
     """
