@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: dc6c1380a53f
+Revision ID: acfb7276cd70
 Revises: 
-Create Date: 2022-05-14 10:43:57.333516
+Create Date: 2022-05-14 12:39:20.986357
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc6c1380a53f'
+revision = 'acfb7276cd70'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,7 +33,7 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=True),
     sa.Column('time_of_use', sa.Integer(), nullable=True),
     sa.Column('potency', sa.Integer(), nullable=True),
-    sa.Column('state', sa.Integer(), nullable=True),
+    sa.Column('state', sa.String(length=2), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -41,10 +41,10 @@ def upgrade():
     op.create_index(op.f('ix_simulation_item'), 'simulation', ['item'], unique=False)
     op.create_table('result',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('simulation_id', sa.Integer(), nullable=False),
     sa.Column('consumption', sa.Integer(), nullable=True),
     sa.Column('tax', sa.Integer(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
-    sa.Column('simulation_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['simulation_id'], ['simulation.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
