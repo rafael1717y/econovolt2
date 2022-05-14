@@ -25,16 +25,17 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item {{ 'active' if active_page == 'home' else '' }}"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link">Cadastrar</a></li>
-            
+                     
             {% if current_user.is_anonymous %} 
+            <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link">Cadastrar</a></li>
             <li class="nav-item"> <a href="{{ url_for('login') }}" class="nav-link">Entrar</a></li>
             {% else %}
+            <li class="nav-item"> <a href="{{ url_for('new_simulation')}}" class="nav-link">Nova Simulação</a></li>
             <li class="nav-item"> <a href="{{ url_for('user', username=current_user.username) }}" class="nav-link">Perfil</a></li>
             <li class="nav-item"> <a href="{{ url_for('logout') }}" class="nav-link">Sair </a></li>
-            {% endif %}
-                 
-        </ul>
+            {% endif %}                 
+        
+          </ul>
       </div>
     </div>
   </nav>

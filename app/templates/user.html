@@ -11,11 +11,9 @@
     </table>
     <hr>
     <h1>Últimas simulações realizadas:</h1>
-    <hr>
-     {% for simulation in simulations %}
-    <p>
-        {{ simulation.author.username }} simulou: </b>  {{ simulation.body }} </br>
-    </p>
-    {% endfor %}
-</div>
+    <hr>        
+    <h3>O valor total calculado foi: R$ {{ valor_total }} </h3>
+    </div>
+    
+
 {% endblock content %}
