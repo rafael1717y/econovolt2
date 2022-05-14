@@ -3,6 +3,10 @@
 {% block content %}
 <h1>Hi, {{ current_user.username }}!</h1>
 {% for simulation in simulations  %}
-<div><p>{{ simulation }} </p><div>
+<div>
+    <p> Id: {{ simulation.id }}  - Estado: {{ simulation.state }} - Quantidade: {{ simulation.quantity }} -
+        Item: {{ simulation.item }} - Tempo de uso: {{ simulation.time_of_use }} - Potência: {{ simulation.potency }} </p>
+    <div>
+
 {% endfor %}
 {% endblock %}

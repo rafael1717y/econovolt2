@@ -52,7 +52,10 @@ class RegistrationForm(FlaskForm):
 class NewSimulationForm(FlaskForm):
         # as categorias deverão vir do db?? Colocar apenas itens maior consumo??
         # Para um item -- ou um for com o num itens??
-        item = SelectField("Itens", choices=["Geladeira", "Umidificador", "Chuveiro", "TV", "Ar-Condicionado"], option_widget=None, validate_choice=True)
-        quantity = IntegerField("Quantidade")
+        item = SelectField("Item:", choices=["Geladeira", "Umidificador", "Chuveiro", "TV", "Ar-Condicionado"], option_widget=None, validate_choice=True)
+        quantity = IntegerField("Quantidade:", validators=[DataRequired()])
+        time_of_use = IntegerField("Tempo de uso em horas:", validators=[DataRequired()])
+        potency = IntegerField("Potência em W:", validators=[DataRequired()])
+        state = SelectField("Estado:", choices=["MG", "SP", "RJ"], option_widget=None, validate_choice=True)
         submit = SubmitField("Adicionar")
-        #finish = SubmitField("Finalizar")
+        

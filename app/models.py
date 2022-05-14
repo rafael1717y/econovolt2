@@ -50,21 +50,36 @@ class User(UserMixin, db.Model):
         return "<User {}>".format(self.username)
 
 
-class Simulation(db.Model):
+class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, author=u)
      id = db.Column(db.Integer, primary_key=True)
      item = db.Column(db.String(120), index=True)
      quantity = db.Column(db.Integer)
-     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+     time_of_use = db.Column(db.Integer)
+     potency = db.Column(db.Integer)
+     state = db.Column(db.String(2))  # Estado ---lista escolhas // tarifa por estado
      user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+     result = db.relationship('Result', backref='simulation', lazy='dynamic')
 
      def __repr__(self):
          return "Item incluído para simulação >>> {}".format(self.item)  # retorna simul. item
 
-     def calcular_custo(self):
-            print('Calculando custo')
 
     
-    #s = Simulation(item='geladeira', quantity=1, author=u)
+class Result(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    consumption = db.Column(db.Integer)
+    tax = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     
+    simulation_id = db.Column(db.Integer, db.ForeignKey('simulation.id'))
+    
+
+    def calcular_custo(self):
+        print('Calculando custo')
+
+    def __repr__(self):
+        return "Resultado de uma simulação {}".format(self.tax)
+
+
 
     
 # Fora da classe
