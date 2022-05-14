@@ -36,3 +36,4 @@ venv
 app.db
 econovolt.log*
 anot.txt
+pendencias.txt
