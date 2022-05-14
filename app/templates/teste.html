@@ -1,22 +1,77 @@
 {% extends "base.html" %}
 
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+
+
 {% block content %}
 <h1>Hi, {{ current_user.username }}!</h1>
 <h2>Inclua os itens abaixo. Ao terminar clique em finalizar para 
 verificar o resultado da simulação</h2>
 
+<br>
+<br>
 <form action="" method="post">
+   
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+         <div class="alert alert-info" id="alert" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     {{ form.hidden_tag() }}
     <p>
-        {{ form.item.label }} <br>
-        {{ form.item(cols=32, rows=4 )}}
+        {{ form.state.label }} 
+        {{ form.state(cols=32, rows=4 )}}
+        {% for error in form.state.errors %}
+            <span style="color:red;"> [{{ error }}]</span>
+        {% endfor %}
     </p>
+    
+    <p>
+        {{ form.item.label }} 
+        {{ form.item(cols=32, rows=4 )}}
+        {% for error in form.item.errors %}
+            <span style="color:red;"> [{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
         {{ form.quantity.label }}
         {{ form.quantity }}
-    <p> {{ form.submit() }} </p>
+        {% for error in form.quantity.errors %}
+            <span style="color:red;"> [{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p> 
+        {{ form.time_of_use.label }}
+        {{ form.time_of_use }}
+        {% for error in form.time_of_use.errors %}
+            <span style="color:red;"> [{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p> 
+        {{ form.potency.label }}
+        {{ form.potency }}
+        {% for error in form.potency.errors %}
+            <span style="color:red;"> [{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+
+
+    <p>
+        {{ form.submit() }} 
     
-    <a href="{{url_for('display')}}"><input type="button" value="finalizar"></a>
+    </p>
     
+    <a href="{{url_for('display')}}"><input type="button" value="finalizar" color="red;"></a>
+
+    
+
 </form>
 
 {% endblock %}

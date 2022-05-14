@@ -1,3 +1,4 @@
+from sre_parse import State
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
@@ -159,10 +160,12 @@ def process():
 def new_simulation():
     form = NewSimulationForm()
     if form.validate_on_submit():
-        simulation = Simulation(item=form.item.data, quantity=form.quantity.data)
+        simulation = Simulation(item=form.item.data, quantity=form.quantity.data, potency=form.potency.data,
+                                time_of_use=form.time_of_use.data, state=form.state.data)
         db.session.add(simulation)
         db.session.commit()
-        flash('Simulação adicionada.')
+        flash('O item foi adicionado para simulação.')
+        
         #calcularcusto()
         return redirect(url_for('new_simulation'))
     
