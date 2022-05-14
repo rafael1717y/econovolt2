@@ -68,11 +68,21 @@ def about():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    simulations = [
-        {"author": user, "body": "Simulação #1"},
-        {"author": user, "body": "Simulação #2"},
-    ]
-    return render_template("user.html", user=user, simulations=simulations)
+    valor_total = []
+    all = Simulation.query.all()
+    for i in all:
+        print('Id do item >>', i.id)
+        print('Nome do item >>', i.item)
+        # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
+        valor_parcial = (i.potency * i.time_of_use * i.quantity)
+        print('Valor parcial >>>', valor_parcial) 
+        valor_total.append(valor_parcial)   
+    
+    valor_total = sum(valor_total)
+       
+
+    return render_template("user.html", user=user, valor_total=valor_total, simulations=all)
+     
 
 
 @app.route("/reset_password_request", methods=["GET", "POST"])
@@ -109,7 +119,6 @@ def reset_password(token):
     return render_template("reset_password.html", form=form)
 
 
-# View para realizar uma simulação
 """
 @app.route("/new_simulation", methods=["GET", "POST"])
 def new_simulation():
@@ -121,17 +130,7 @@ def new_simulation():
         return redirect(url_for("index"))
     return render_template("new_simulation.html", form=form)
 """
-# 
-"""
-@app.route("/new_simulation", methods=["GET", "POST"])
-def new_simulation():
-    return render_template('new_simulation.html')
-"""
 
-simulations = []
-def guardar(email):
-    simulations.append(email)
-    print('134', simulations)
 
 # ------------------------------------------------------------------------------
 # Ajax
@@ -145,18 +144,16 @@ def process():
     print('linha 136', name)
     if (name and email):  ## validac e calc aqui >> simulacoes >> resultado no final
         msg = 'Dados incluídos com sucesso. '
-        guardar(email)
+        #guardar(email)
         return jsonify({'name': name, 'email': email, 'msg': msg})
     return jsonify({'error': 'Faltando dados!'})
 
 # ------------------------------------------------------------------------------
 
+# 1. Criação de uma simulação
 
-# Inclusão dos itens para simulação (redirect pra new_simulation sempre)
-# TODO condição de parada para usuário. Ver resultado
-# TODO Usar Wtforms
-@login_required
 @app.route('/new_simulation', methods=['GET', 'POST'])
+@login_required
 def new_simulation():
     form = NewSimulationForm()
     if form.validate_on_submit():
@@ -164,27 +161,17 @@ def new_simulation():
                                 time_of_use=form.time_of_use.data, state=form.state.data, user_id=1) #### -->> corrigir user_id
         db.session.add(simulation)
         db.session.commit()
-        flash('O item foi adicionado para simulação.')
-        
+        flash('O item foi adicionado para simulação.')        
         #calcularcusto()
         return redirect(url_for('new_simulation'))
     
-    simulations = [
-        {
-        'author': {'username': 'John'},
-        'item': 'geladeira',
-        'quantity': '1'},
+    return render_template('teste.html', title='Simulações', form=form)
 
-        {'author': {'username': 'Susan'},
-        'item': 'computador',
-        'quantity': '2', 
-        }
-    ]
-    return render_template('teste.html', title='Simulações', form=form, simulations=simulations)
     
-# 2. Exibe o resultado das simulações após cálculo [método para calcular custo na classe Simulation]
-@login_required
+# 2. Exibe o resultado das simulações após cálculo 
+# [método para calcular custo na classe Simulation]
 @app.route('/display_simulations', methods=['GET', 'POST'])
+@login_required
 def display_simulations():
     print('calculando...')
     valor_total = []
@@ -192,38 +179,22 @@ def display_simulations():
     for i in all:
         print('Id do item >>', i.id)
         print('Nome do item >>', i.item)
-        # teste multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
+        # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
         valor_parcial = (i.potency * i.time_of_use * i.quantity)
         print('Valor parcial >>>', valor_parcial) 
         valor_total.append(valor_parcial)   
     
     valor_total = sum(valor_total)
-    print('Valor Total >>', valor_total)
-   
+    print('Valor Total >>', valor_total)   
     return render_template("display_simulations.html", user=user, valor_total=valor_total, simulations=all)
 
 
 
-@login_required
+
 @app.route('/display')
+@login_required
 def display():
     return redirect(url_for('display_simulations'))
 
     
-    """
-    form = NewSimulationForm()
-    simulation = Simulation(item=form.post.data, quantity=form.post.data, author=current_user)
-    db.session.add(simulation)
-    db.session.commit()
-    flash('Simulação adicionada.')
-    return render_template('new_simulation.html')
-
-    simulations = [
-        {
-            'author': {'username': 'John'},
-            'item': {'geladeira'},
-            'quantity': {1},
-        }
-    ]
-    return render_template('index.html', title='Home Page', form=form, simulations=simulations)
-    """
+    
