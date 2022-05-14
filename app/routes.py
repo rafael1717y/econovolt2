@@ -1,4 +1,3 @@
-from sre_parse import State
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
@@ -155,10 +154,13 @@ def process():
 @app.route('/new_simulation', methods=['GET', 'POST'])
 @login_required
 def new_simulation():
+    
     form = NewSimulationForm()
     if form.validate_on_submit():
+        # TODO: Ajustar modelos de dados e vincular as simulações a um único id [user_id]
+        # TODO: Como um post vinculado a um unico usuário.
         simulation = Simulation(item=form.item.data, quantity=form.quantity.data, potency=form.potency.data,
-                                time_of_use=form.time_of_use.data, state=form.state.data, user_id=1) #### -->> corrigir user_id
+                                time_of_use=form.time_of_use.data, state=form.state.data, author=current_user) #### -->> corrigir user_id
         db.session.add(simulation)
         db.session.commit()
         flash('O item foi adicionado para simulação.')        
@@ -170,15 +172,19 @@ def new_simulation():
     
 # 2. Exibe o resultado das simulações após cálculo 
 # [método para calcular custo na classe Simulation]
+###-------------- Colocar um link para acessar a rota - Ultimas simulações realizadas
 @app.route('/display_simulations', methods=['GET', 'POST'])
 @login_required
 def display_simulations():
     print('calculando...')
     valor_total = []
-    all = Simulation.query.all()
+    #all = Simulation.query.all() 
+    all = current_user.simulations.all()   ##?? mostrar as simulações só do usuário atual logado
+    print('linha 182>> ', all)
     for i in all:
         print('Id do item >>', i.id)
         print('Nome do item >>', i.item)
+        print("Timestamp >>", i.timestamp)
         # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
         valor_parcial = (i.potency * i.time_of_use * i.quantity)
         print('Valor parcial >>>', valor_parcial) 
@@ -191,10 +197,15 @@ def display_simulations():
 
 
 
-@app.route('/display')
+@app.route('/display',  methods=['GET', 'POST'])
 @login_required
 def display():
     return redirect(url_for('display_simulations'))
 
     
-    
+
+
+@app.route('/total',  methods=['GET', 'POST'])
+@login_required
+def total():
+    return render_template("total.html")

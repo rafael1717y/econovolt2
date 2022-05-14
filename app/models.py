@@ -46,6 +46,7 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
+
     def __repr__(self):
         return "<User {}>".format(self.username)
 
@@ -59,100 +60,30 @@ class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, autho
      time_of_use = db.Column(db.Integer)
      potency = db.Column(db.Integer)
      state = db.Column(db.String(2))  # Estado ---lista escolhas // tarifa por estado ??
+     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
      user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-     result = db.relationship('Result', backref='simulation', lazy='dynamic')
-
-
-     def __init__(self, item, quantity, time_of_use, potency, state, user_id):
-         self.item = item
-         self.quantity = quantity
-         self.time_of_use = time_of_use
-         self.potency = potency
-         self.state = state
-         self.user_id = user_id
-
-
-     def insert(self):
-         db.session.add(self)
-         db.session.commit()
-
      
-     def update(self):
-         db.session.commit()
 
 
-     def delete(self):
-         db.session.delete(self)
-         db.session.commit()
-
-
-     def detail(self):
-         return {
-             'user_id': self.user_id,
-             'item': self.item,
-             'quantity': self.quantity,
-             'time_of_use': self.time_of_use,
-             'potency': self.potency,
-             'state': self.state,
-        }
-
-     def calcular_custo(self):
-         print('calculando...')
-         valor_total = []
-         all = Simulation.query.all()
-         for i in all:
-             print('Id do item >>', i.id)
-             print('Nome do item >>', i.item)
-             # teste multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
-             valor_parcial = (i.potency * i.time_of_use * i.quantity)
-             print('Valor parcial >>>', valor_parcial) 
-             valor_total.append(valor_parcial)   
-         print('Valor Total >>', sum(valor_total))
-         
-
+     # TODO: Ajustar modelos de dados e vincular as simulações a um único id [user_id]
+     # TODO: Como um post vinculado a um unico usuário.
+     # TODO: Estudo livro Grinberg -- um usuário um post [relação]
+     
+    
+     def mostrar_simulacoes_usuario(self):
+         pass
 
      def __repr__(self):
-         return "Item incluído para simulação >>> {}".format(self.item)  # retorna simul. item
+         return f"{self.item} de id: {self.id} incluído na simulação para o usuário de id {self.user_id}"
 
 
-    
-class Result(db.Model):
-    __tablename__ = 'Result'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    simulation_id = db.Column(db.Integer, db.ForeignKey('Simulation.id'), nullable=False) #'simulation.id
-    consumption = db.Column(db.Integer)
-    tax = db.Column(db.Integer) # armazena o valor do cálculo
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     
+     def calcular_tarifa_uma_simulacao(self): #queries aqui
+         pass
 
 
-    def __init__(self, simulation_id, timestamp):
-        self.simulation_id = simulation_id
-        self.timestamp = timestamp
-
-
-    def insert(self):
-        db.session.add(self)
-        db.session.commit()
-
-
-    def detail(self):
-        return {
-            "simulation_id": self.simulation_id,
-            "timestamp": self.timestamp,
-        }
-
-    def exibir_custo(self):
-        print('Exibir custo')
-        #self.tax = (self.Simulation.quantity * self.Simulation.potency)
-        #print('li 135', self.tax)
-        #return f"A tarifa calculada foi {self.tax}"
-
-
-
-    def __repr__(self):
-        return "Resultado de uma simulação {}".format(self.tax)
-
+     def calcular_total_simulado(self):
+         pass
+             
 
 
     
@@ -172,8 +103,37 @@ def load_user(id):
 #s.insert() -- db.session.commit(u)
 #all = s.query.all()  [Item incluído para simulação >>> tv, Item incluído para simulação >>> geladeira]
 
+# Aqui = s = Simulation(item='geladeira', quantity=10, time_of_use=1, potency=10, state='MG', author=u)
+#simulations = u.simulations.all()
+#s = Simulation.query.all()
+#for s in s:
+#...   print(s.id, s.author.username, s.item)
+
+
+# AQUI
+# ------------------------------------------------
+#obter a simulação de um usuário
+##simulacao_usuario_1 = u.simulations.all()
+# simulacao_usuario_2 = u2.simulations.all()
+#>>> simulacao_usuario_2
+#[geladeira de id: 2 incluído na simulação para o usuário de id 2]
+
 """
-jogar tudo em all 
+totals = Simulation.query.all()
+lista = []
+for s in totals:
+    lista.append(s.quantity)
+sum(lista)
+
+totals =Simulation.query.all()
+for s in totls:
+    print(s.timestamp)
+"""
+
+
+
+"""
+tudo em all 
 all = s.query.all()
 for item in all:
     print(item.quantity)
