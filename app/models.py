@@ -51,7 +51,7 @@ class User(UserMixin, db.Model):
 
 
 class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, author=u)
-     tablename__ = 'Simulation'
+     __tablename__ = 'Simulation'
 
      id = db.Column(db.Integer, primary_key=True)
      item = db.Column(db.String(120), index=True)
@@ -101,7 +101,7 @@ class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, autho
          valor_total = []
          all = Simulation.query.all()
          for i in all:
-             print('Id do iterem >>', i.id)
+             print('Id do item >>', i.id)
              print('Nome do item >>', i.item)
              # teste multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
              valor_parcial = (i.potency * i.time_of_use * i.quantity)
@@ -117,10 +117,10 @@ class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, autho
 
     
 class Result(db.Model):
-    tablename__ = 'Result'
+    __tablename__ = 'Result'
     
     id = db.Column(db.Integer, primary_key=True)
-    simulation_id = db.Column(db.Integer, db.ForeignKey('simulation.id'), nullable=False) #'simulation.id
+    simulation_id = db.Column(db.Integer, db.ForeignKey('Simulation.id'), nullable=False) #'simulation.id
     consumption = db.Column(db.Integer)
     tax = db.Column(db.Integer) # armazena o valor do cálculo
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     
