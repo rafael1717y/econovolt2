@@ -161,7 +161,7 @@ def new_simulation():
     form = NewSimulationForm()
     if form.validate_on_submit():
         simulation = Simulation(item=form.item.data, quantity=form.quantity.data, potency=form.potency.data,
-                                time_of_use=form.time_of_use.data, state=form.state.data)
+                                time_of_use=form.time_of_use.data, state=form.state.data, user_id=1) #### -->> corrigir user_id
         db.session.add(simulation)
         db.session.commit()
         flash('O item foi adicionado para simulação.')
@@ -186,12 +186,23 @@ def new_simulation():
 @login_required
 @app.route('/display_simulations', methods=['GET', 'POST'])
 def display_simulations():
-    simulations = Simulation.query.all()
-    #simulations = [
-    #    {"author": user, "body": "Simulação #1"},
-    #    {"author": user, "body": "Simulação #2"},
-    #]
-    return render_template("display_simulations.html", user=user, simulations=simulations)
+    print('calculando...')
+    valor_total = []
+    all = Simulation.query.all()
+    for i in all:
+        print('Id do item >>', i.id)
+        print('Nome do item >>', i.item)
+        # teste multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
+        valor_parcial = (i.potency * i.time_of_use * i.quantity)
+        print('Valor parcial >>>', valor_parcial) 
+        valor_total.append(valor_parcial)   
+    
+    valor_total = sum(valor_total)
+    print('Valor Total >>', valor_total)
+   
+    return render_template("display_simulations.html", user=user, valor_total=valor_total, simulations=all)
+
+
 
 @login_required
 @app.route('/display')
