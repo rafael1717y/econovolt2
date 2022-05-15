@@ -184,7 +184,7 @@ def display_simulations():
     for i in all:
         print('Id do item >>', i.id)
         print('Nome do item >>', i.item)
-        print("Timestamp >>", i.timestamp)
+        #print("Timestamp >>", i.timestamp)
         # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
         valor_parcial = (i.potency * i.time_of_use * i.quantity)
         print('Valor parcial >>>', valor_parcial) 
@@ -209,3 +209,12 @@ def display():
 @login_required
 def total():
     return render_template("total.html")
+
+@app.route('/simulations_by_user/<string:username>')
+def simulations_by_user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    simulations = current_user.simulations.all()
+    return render_template('user.html', user=user, simulations=simulations,
+    )
+
+

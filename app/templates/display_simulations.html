@@ -6,19 +6,22 @@
 <br>
 <h1>Olá, {{ current_user.username }}!</h1>
 
-<h1>O valor total calculado foi: R$ {{ valor_total }} </h1>
-<h2>Em: </h2>
-<br>
 
 <h3>Dados fornecidos: </h3>
 <br>
 
 {% for simulation in simulations  %}
-<div>
+    <h2>Em: {{ simulation.publish_date }} </h2>
+    <h2>O valor total calculado foi: R$ {{ valor_total }} </h2>
+
+    <div>
+    
     <p> Id: {{ simulation.id }}  - Estado: {{ simulation.state }} - Quantidade: {{ simulation.quantity }} -
         Item: {{ simulation.item }} - Tempo de uso: {{ simulation.time_of_use }} - Potência: {{ simulation.potency }} </p>
 <div>
 {% endfor %}
+
+<button onclick="history.back()">Voltar</button>
 
 
 {% endblock %}

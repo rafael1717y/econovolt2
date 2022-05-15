@@ -13,7 +13,13 @@
     <h1>Últimas simulações realizadas:</h1>
     <hr>        
     <h3>O valor total calculado foi: R$ {{ valor_total }} </h3>
-    </div>
+
+    {% for simulation in simulations %}
+    <p> {{ simulation.publish_date }} </p>
+    {% endfor %}
+
+</div>
+
     
 
 {% endblock content %}

@@ -6,6 +6,7 @@ dnspython==2.2.1
 dominate==2.6.0
 email-validator==1.2.1
 Flask==2.1.2
+Flask-Admin==1.6.0
 Flask-Bootstrap==3.3.7.1
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
