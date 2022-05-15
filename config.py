@@ -1,4 +1,5 @@
 import os
+import locale
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -15,3 +16,5 @@ class Config(object):
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMINS = ["econovoltsimulador@gmail.com"]
+
+    

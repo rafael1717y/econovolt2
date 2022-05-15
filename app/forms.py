@@ -1,3 +1,4 @@
+from email import message
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField, SelectField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
@@ -53,9 +54,9 @@ class NewSimulationForm(FlaskForm):
         # as categorias deverão vir do db?? Colocar apenas itens maior consumo??
         # Para um item -- ou um for com o num itens??
         item = SelectField("Item:", choices=["Geladeira", "Umidificador", "Chuveiro", "TV", "Ar-Condicionado"], option_widget=None, validate_choice=True)
-        quantity = IntegerField("Quantidade:", validators=[DataRequired()])
-        time_of_use = IntegerField("Tempo de uso em horas:", validators=[DataRequired()])
+        quantity = IntegerField("Quantidade:", validators=[DataRequired()]) 
+        time_of_use = IntegerField("Tempo de uso em horas:", validators=[DataRequired()], ) 
         potency = IntegerField("Potência em W:", validators=[DataRequired()])
         state = SelectField("Estado:", choices=["MG", "SP", "RJ"], option_widget=None, validate_choice=True)
-        submit = SubmitField("Adicionar")
+        submit = SubmitField(label=('Adicionar'))
         

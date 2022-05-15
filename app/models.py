@@ -6,7 +6,7 @@ from hashlib import md5
 import jwt
 from app import app
 from time import time
-from datetime import datetime
+import datetime
 
 
 class User(UserMixin, db.Model):
@@ -60,7 +60,7 @@ class Simulation(db.Model):  #s = Simulation(item='geladeira', quantity=1, autho
      time_of_use = db.Column(db.Integer)
      potency = db.Column(db.Integer)
      state = db.Column(db.String(2))  # Estado ---lista escolhas // tarifa por estado ??
-     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+     publish_date = db.Column(db.DateTime(), index=True, default=datetime.datetime.now)
      user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
      
 
