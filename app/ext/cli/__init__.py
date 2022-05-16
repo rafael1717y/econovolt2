@@ -1,6 +1,7 @@
 import click
 from app.ext.db import db 
-from app.ext.db import models 
+from app.ext.auth.models import User
+from app.ext.db import models  # noqa
 
 
 
@@ -23,7 +24,7 @@ def init_app(app):
     def add_user(username, email, password_hash, admin):
         "Adiciona um novo usuário."
         # TODO: tratar erros - Operation error?
-        user = models.User(
+        user = User(
             username=username, 
             email = email,
             password_hash=password_hash,
@@ -43,7 +44,8 @@ def init_app(app):
 
     @app.cli.command()
     def list_users():
-        click.echo('lista de usuários')
+        users = User.query.all()
+        click.echo(f"lista de usuários {users}")
 
 
 

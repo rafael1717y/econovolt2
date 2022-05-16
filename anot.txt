@@ -1,6 +1,9 @@
 export FLASK_ENV=development
 flask debugtoolbar  para fazer debug do template
 
+flask create-db 
+
+
 # colocar a linha para debug e ver em logging na debug toolbar
 
 flask routes
@@ -27,6 +30,15 @@ adicionar um usuário
 flask add-user --username='simone', --email='simone@gmail.com', --password_hash="bar", --admin
 
 
+---
+flask create-db
+flask db init
+flask db migrate -m 'initial migrate'
+
+>> adicionar um campo -> flask db migrate -m 'add on_menu to Simulation
+>> aplicar a migração -> flask db upgrade 
+--
+
 
 User.query.all()
 
@@ -34,22 +46,6 @@ User.query.filter(User.id == 1).first()
 select * from user where id =1 
 
 
-
-
-
-
-from app import db, User
-db.create_all()
-
-u = Users()
-u.name = 'ra'
-u.email = '
-u.pass
-db.session.add(user)
-db.session.commit()
-
-
-#
 
 
 #s = Simulation(item="geladeira", quantity=8, time_of_use=10, potency=100, state="MG", user_id=1)
