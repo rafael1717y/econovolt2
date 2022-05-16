@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn econovolt2:app
+web: flask db upgrade; gunicorn wsgi:app
