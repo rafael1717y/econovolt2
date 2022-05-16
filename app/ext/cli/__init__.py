@@ -1,6 +1,6 @@
 import click
 from app.ext.db import db 
-from app.ext.site import models 
+from app.ext.db import models 
 
 
 
