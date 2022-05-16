@@ -1,50 +1,16 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager
-from config import Config
-from flask_bootstrap import Bootstrap
-import logging
-from logging.handlers import RotatingFileHandler
-import os
-from flask_mail import Mail
+from app.ext import site
+from app.ext import toolbar
+from app.ext import config
+from app.ext import db
+from app.ext import cli 
 
 
-app = Flask(__name__)
-app.config.from_object(Config)
-
-
-# Registro das extensões
-# -----------------------
-bootstrap = Bootstrap(app)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-mail = Mail(app)
-login = LoginManager(app)
-login.login_view = "login"
-
-
-# Boilerplate de Logs
-# -------------------
-# TODO: transformação em uma função
-if not app.debug:
-    if not os.path.exists("logs"):
-        os.mkdir("logs")
-    file_handler = RotatingFileHandler(
-        "logs/econovolt.log", maxBytes=10240, backupCount=10
-    )
-    file_handler.setFormatter(
-        logging.Formatter(
-            '%(asctime)s  %(name)s  %(levelname)s'
-            'l:%(lineno)d f:%(filename)s: %(message)s'
-        )
-    )
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-    app.logger.setLevel(logging.INFO)
-    app.logger.info("A aplicação Econovolt iniciou...")
-
-
-# Depois da instância da aplicação criada:
-# ----------------------------------------
-from app import routes, models, errors
+def create_app():
+    app = Flask(__name__)  
+    config.init_app(app)
+    db.init_app(app)
+    cli.init_app(app)
+    toolbar.init_app(app)  
+    site.init_app(app)
+    return app

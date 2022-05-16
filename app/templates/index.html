@@ -1,24 +1,30 @@
-{% extends 'base.html' %}
-{% set active_page = 'home' %}
-{% block content %}
+{% extends "base.html" %}
+{% import "macros/list_item.html" as list_item %}
 
-<br>
-<br>
+{% block top %}
+ <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+          {{ site_name }}
+          </h1>
+          <h2 class="subtitle">
+           {{ site_subtitle }}
+        </h2>
+        </div>
+      </div>
+</section>
+{% endblock top %}
 
-  <div class="container">
-    <h1><strong>Econovolt</strong> </h1>
-    <h2>Simulador de Consumo Residencial</h2>
-  </div>
 
-<div class="container">
-  <a href="{{ url_for('index') }}" class="navbar-brand">
-    <img src="{{ url_for('static', filename='img/imagem_principal.jpg') }}" height="700px">
-  </a>
+{% block main %}
+<div class="columns">
+  {{ list_item.cards([1, 2, 3, 4]) }}
 </div>
+{% endblock main %}
+    
+      
 
-<div>
-  <h3>.</h3>
-</div>
 
 
-{% endblock %}
+  

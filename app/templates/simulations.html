@@ -1,19 +1,24 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% import "macros/list_item.html" as list_item %}}
+
+{% block top %}
+ <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+          {{ site_name }}
+          </h1>
+          <h2 class="subtitle">
+           {{ site_subtitle }}
+        </h2>
+        </div>
+      </div>
+</section>
+{% endblock top %}
 
 
-{% block content %}
-<div class="container">
-<div>
-    <h1><strong>Olá, {{ current_user.username }}</strong></h1>
-
-    <h2>Últimas simulações realizadas: </h2><br>
-    <p> Simulação I</p><br>
-    <p> Simulação II</p><br>
-    <p> Simulação III </p> <br>
-    <!--for simulacao in... -->
+{% block main %}
+<div class="columns">
+  {{ list_item.cards([1, 2, 3, 4, 5, 6]) }}
 </div>
-
-</div>
-
-
-{% endblock %}
+{% endblock main %}

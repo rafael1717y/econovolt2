@@ -1,11 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block content %}
-
-<div class="container">
-    <h1>Sobre a página</h1>
-    <p><a href="{{ url_for('index') }}">Voltar</a></p>
-    
+{% block top %}
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1>Econovolt</h1>
+      </div>
+    </div>
+</section>
 {% endblock %}
 
-</div>
+
+{% block main %}
+<h1>Sobre o site</h1>
+
+{% endblock main %}
