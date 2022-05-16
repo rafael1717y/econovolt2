@@ -1,1 +1,1 @@
- web: flask db upgrade; gunicorn econovolt:app
+ gunicorn -w 2 'app:create_app()'
