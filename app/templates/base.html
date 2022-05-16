@@ -1,78 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Econovolt</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    {% endblock head %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{% block title %}{% endblock %} Econovolt</title>
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %} {% endblock extra_css %}
 </head>
-
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a href="{{ url_for('index') }}" class="navbar-brand" >
-        <img src="{{ url_for('static', filename='img/logo.jpeg') }}" height="40px">
-      </a>
-      <button class="navbar-toggler" type="button"
-              data-toggle="collapse" data-target="#navbarResponsive"
-              aria-controls="navbarResponsive" aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item {{ 'active' if active_page == 'home' else '' }}"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
-                     
-            {% if current_user.is_anonymous %} 
-            <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link">Cadastrar</a></li>
-            <li class="nav-item"> <a href="{{ url_for('login') }}" class="nav-link">Entrar</a></li>
-            {% else %}
-            <li class="nav-item"> <a href="{{ url_for('new_simulation')}}" class="nav-link">Nova Simulação</a></li>
-            <li class="nav-item"> <a href="{{ url_for('user', username=current_user.username) }}" class="nav-link">Perfil</a></li>
-            <li class="nav-item"> <a href="{{ url_for('logout') }}" class="nav-link">Sair </a></li>
-            {% endif %}                 
-        
-          </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container">
-        {% block content %}
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
-    {% endblock %}
-
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-
-  
-
-
-
-</body>
-
-
-</html>
-
-
-
-
-
+  <body>
+   
+    {% block nav %}
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="{{ url_for('static', filename='img/logo.jpeg') }}" height="50">
+          <br>
+          <strong>Econovolt</strong>
+        </a>
     
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">
+            Home
+          </a>
+    
+          <a class="navbar-item" href="{{ url_for('site.simulations') }}">
+            Simulações
+          </a>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More
+            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="{{ url_for('site.about') }}">
+                Sobre
+              </a>
+              <a class="navbar-item">
+                Contato
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">
+                Reporte um erro
+              </a>
+            </div>
+          </div>
+        </div>
+    
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Cadastrar</strong>
+              </a>
+              <a class="button is-light">
+                Entrar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% endblock nav %}
+
+
+{% block top %} {% endblock top %}
+
+
+
+
+    <section class="section">
+    <div class="container">
+
+      {% block main %} {% endblock main %}
+    </div>
+      
+  </section>
+
+  {% block footer %}
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Projeto Integrador</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+      </p>
+    </div>
+  </footer>
+
+  {% endblock footer %}
+  </body>
+</html>
