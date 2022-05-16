@@ -1,5 +1,6 @@
 *.py[cod]
-
+*anot.txt
+anot.txt
 # C extensions
 *.so
 
