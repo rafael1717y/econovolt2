@@ -1,1 +1,1 @@
- gunicorn 'app:create_app()'
+ gunicorn 'econovolt2:create_app()'
