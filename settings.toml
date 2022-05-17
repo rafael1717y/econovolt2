@@ -16,9 +16,6 @@ EXTENSIONS = [
 DEBUG = true
 SQLALCHEMY_DATABASE_URI = "sqlite:///econovolt.db" 
 SQLALCHEMY_TRACK_MODIFICATIONS = false 
-DEBUG_TB_TEMPLATE_EDITOR_ENABLED = true
-DEBUG_TB_PROFILER-ENABLED = true
-DEBUG_TB_INTERCEPT_REDIRECTS = false
 ADMIN_NAME = "Econovolt (dev mode)"
 EXTENSIONS = [
     "app.ext.db:init_app",

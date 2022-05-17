@@ -10,5 +10,10 @@ def init_app(app):
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "econovolt.db")
     
+    if app.debug:
+        app.config["DEBUG_TB_TEMPLATE_EDITOR_ENABLED"] = True
+        app.config["DEBUG_TB_PROFILER-ENABLED = true"] = True
+        app.config["DEBUG_TB_INTERCEPT_REDIRECTS = false"] = True
+
     FlaskDynaconf(app)
     app.config.load_extensions("EXTENSIONS")
