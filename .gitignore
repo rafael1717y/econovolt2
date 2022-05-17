@@ -41,8 +41,8 @@ pendencias.txt
 .secrets
 .secrets.toml
 .flaskenv
-.env
 
+.env
 /**.secrets.*
 /**anot.txt.*
 /**.txt.*
