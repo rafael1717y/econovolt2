@@ -8,8 +8,8 @@ admin = Admin()
 
 
 def init_app(app):
-    admin.name = "Econovolt"
-    admin.template_mode = "bootstrap2"
+    admin.name = app.config.get("ADMIN_NAME", "Econovolt")
+    admin.template_mode = app.config.get("ADMIN_TEMPLATE_MODE", "bootstrap2")
     admin.init_app(app)
     admin.add_view(
         ModelView(Simulation, db.session)
