@@ -13,17 +13,7 @@
 
   </head>
   <body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %} {% endblock %}
-   
+    
 
     {% block nav %}
     <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -74,12 +64,11 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Cadastrar</strong>
-              </a>
+              <a class="button is-primary" href="{{ url_for('site.register') }}"><strong>Cadastrar</strong></a>
               {% if current_user.is_anonymous %}
               <a class="button is-light" href="{{ url_for('site.login') }}">Entrar</a>
               {% else %}
+              <a class="button is-light" href="{{ url_for('site.user', username=current_user.username) }}">Perfil</a>
               <a class="button is-light" href="{{ url_for('site.logout') }}">Sair</a>
               {% endif %}
             </div>
@@ -88,7 +77,16 @@
       </div>
     </nav>
     {% endblock nav %}
-
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %} {% endblock %}
 
 {% block top %} {% endblock top %}
 

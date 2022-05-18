@@ -11,7 +11,10 @@
 {% endblock %}
 
 
+
 {% block main %}
+
+
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
@@ -28,8 +31,12 @@
         <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
     </p>
+    <br>
     <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
     <p>{{ form.submit() }}</p>
 
 </form>
+<br>
+<br>
+<p>Novo usuário? <a href="{{ url_for('site.register') }}">Clique aqui para se cadastrar!</a></p>
 {% endblock main %}

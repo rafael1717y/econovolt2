@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block top %}
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1><strong>Simulações realizadas</strong></h1>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block main %}
+
+<h1>Usuário: {{ user.username }}</h1>
+<hr>
+
+    {% for s in simulations %}
+    <p>
+        {{ s.author.username }} realizou </b>
+    </p>
+    {% endfor %}
+
+{% endblock main %}

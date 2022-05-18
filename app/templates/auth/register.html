@@ -1,54 +1,50 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 
 {% block top %}
 <section class="hero is-primary">
     <div class="hero-body">
       <div class="container">
-        <h1>Cadastre-se</h1>
+        <h1><strong>Registre-se</strong></h1>
       </div>
     </div>
 </section>
 {% endblock %}
 
+
 {% block main %}
-
-<form action='{url_for("site.register")}}' method="post">
-    {{ form.csrf_token }}
-
-<div class="field">
-    {{ form.username.label }}
-    <div class="control">
-        {{ form.username(size=20 )}}<br>        
-    </div>
-</div>
-<div class="field">
-    {{ form.email.label }}
-    <div class="control">
-        {{ form.email(size=20 )}}<br>        
-    </div>
-</div>
-<div class="field">
-    {{ form.password.label }}
-    <div class="control">
-        {{ form.password(size=20 )}}<br>        
-    </div>
-</div>
-<div class="field">
-    {{ form.password2.label }}
-    <div class="control">
-        {{ form.password2(size=20 )}}<br>        
-    </div>
-</div>
-<div class="field">
-    
-<div class="control">
-        {{ form.submit(size=20 )}}<br>        
-    </div>
-</div>
-
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }} <br>
+        {{ form.username(size=32) }}
+        {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.email.label }} <br>
+        {{ form.email(size=32) }}
+        {% for error in form.email.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }} <br>
+        {{ form.password(size=32) }}
+        {% for error in form.password2.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password2.label }} <br>
+        {{ form.password2(size=32) }}
+        {% for error in form.password2.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <br>
+    <p>{{ form.submit() }}</p>
+    <br>
+    <br>
 </form>
-
-
-
 {% endblock main %}
