@@ -1,4 +1,3 @@
-from turtle import title
 from flask import current_app, flash, request, render_template, redirect, url_for
 from flask import Blueprint
 from app.ext.auth.forms import LoginForm
