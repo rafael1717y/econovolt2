@@ -7,6 +7,8 @@ from app.ext.db.models import Simulation
 admin = Admin()
 
 
+
+
 def init_app(app):
     admin.name = app.config.get("ADMIN_NAME", "Econovolt")
     admin.template_mode = app.config.get("ADMIN_TEMPLATE_MODE", "bootstrap2")

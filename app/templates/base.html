@@ -77,9 +77,11 @@
               <a class="button is-primary">
                 <strong>Cadastrar</strong>
               </a>
-              <a class="button is-light" href="{{ url_for('site.login') }}">
-                Entrar
-              </a>
+              {% if current_user.is_anonymous %}
+              <a class="button is-light" href="{{ url_for('site.login') }}">Entrar</a>
+              {% else %}
+              <a class="button is-light" href="{{ url_for('site.logout') }}">Sair</a>
+              {% endif %}
             </div>
           </div>
         </div>
