@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block top %}
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1><strong>Entre</strong></h1>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block main %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }} <br>
+        {{ form.username(size=32) }}
+        {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }} <br>
+        {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+    <p>{{ form.submit() }}</p>
+
+</form>
+{% endblock main %}
