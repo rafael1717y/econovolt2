@@ -10,9 +10,21 @@
     {% endblock head %}
 
     {% block extra_css %} {% endblock extra_css %}
-</head>
+
+  </head>
   <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %} {% endblock %}
    
+
     {% block nav %}
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
@@ -65,7 +77,7 @@
               <a class="button is-primary">
                 <strong>Cadastrar</strong>
               </a>
-              <a class="button is-light">
+              <a class="button is-light" href="{{ url_for('site.login') }}">
                 Entrar
               </a>
             </div>
