@@ -1,4 +1,4 @@
-from flask import current_app, flash, request, render_template, redirect, url_for
+from flask import current_app, flash, jsonify, request, render_template, redirect, url_for, escape
 from flask import Blueprint
 from app import email
 from app.ext.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
@@ -31,7 +31,7 @@ bp = Blueprint("site", __name__)
 @bp.route("/")
 @bp.route('/index')
 def index():
-    current_app.logger.debug("Entrei na função index")
+    log_request(request, request.data)
     return render_template("index.html", title="Home Page")
 
 
@@ -181,7 +181,21 @@ def new_simulation():
     return render_template('teste.html', title='Simulações', form=form)
     """
 
+# Logs 
+
+def log_request(req, res):
+    with open('econovoltt.log', 'a') as log:
+        print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|')
 
 
-
-
+@bp.route('/view_logs')
+@login_required
+def view_the_log():
+    contents = []
+    with open('econovoltt.log') as log:
+        for line in log:
+            contents.append([])
+            for item in line.split('|'):
+                contents[-1].append(escape(item))
+    titles = ('Form Data', 'Remote addr', 'User_agent', 'Results')
+    return render_template('viewlog.html', the_title='Logs', the_row_titles=titles, the_data=contents, )
