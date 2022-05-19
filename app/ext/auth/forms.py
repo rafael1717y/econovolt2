@@ -1,3 +1,5 @@
+from ast import Sub
+from re import sub
 from flask_wtf import FlaskForm 
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
@@ -37,3 +39,14 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Por favor, use um email diferente.")
 
 
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField('Solicitar nova senha.')
+
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Senha', validators=[DataRequired()])
+    password2 = PasswordField('Repita a senha', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Alterar a senha.')

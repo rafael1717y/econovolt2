@@ -1,11 +1,14 @@
 from flask import current_app, flash, request, render_template, redirect, url_for
 from flask import Blueprint
-from app.ext.auth.forms import LoginForm, RegistrationForm
+from app import email
+from app.ext.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.ext.auth.models import User 
 from app.ext.db import db 
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
+from app.email import send_password_reset_email
 import pdb
+
 
 
 """
@@ -21,7 +24,7 @@ import pdb
 bp = Blueprint("site", __name__)
 
 
-# Registro das rotas principais
+# 01. Registro das rotas principais
 # ------------------------------
 @bp.route("/")
 @bp.route('/index')
@@ -42,8 +45,8 @@ def simulations():
 
 
 # Rotas de autenticação e registro de usuários
-# -------------------------------------------------
 # 2. Dentro do blueprint cria-se a rota para o form.
+# --------------------------------------------------
 @bp.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -85,8 +88,59 @@ def register():
     return render_template("auth/register.html", title="Cadastrar", form=form)
 
 
+# 03. Rotar para tratamento de erros
+# --------------------------------------
+# TODO: Blueprint de erros.
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>
+@bp.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+
+@bp.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
+
+
+
+# 04. Rotas email
+@bp.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('site.index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        print('linha 115 - user >', user)
+        if user:
+            send_password_reset_email(user)
+        flash("As instruções para criação de uma nova senha foram enviadas para o seu email.")
+        return redirect(url_for('site.login'))
+    return render_template('auth/reset_password_request.html', title='Nova senha', form=form)
+
+
+@bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('site.index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('site.index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Sua senha foi alterada.")
+        return redirect(url_for('site.login'))
+    return render_template('auth/reset_password.html', form=form)
+
+
+
+
+
+# 05. Rotas das simulações
+# ---------------------------
 @bp.route('/user/<username>')
 #@login_required
 def user(username):

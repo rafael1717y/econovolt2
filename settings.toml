@@ -11,6 +11,7 @@ EXTENSIONS = [
     "app.ext.migrate:init_app", 
     "app.ext.cli:init_app", 
     "app.ext.site:init_app",
+    "app.ext.mail:init_app",
 ]
 
 [development]
@@ -26,7 +27,8 @@ EXTENSIONS = [
     "app.ext.migrate:init_app", 
     "app.ext.cli:init_app", 
     "app.ext.toolbar:init_app", 
-    "app.ext.site:init_app",    
+    "app.ext.site:init_app",  
+    "app.ext.mail:init_app",  
 ]
 
 [production]
