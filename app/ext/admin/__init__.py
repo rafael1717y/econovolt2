@@ -2,7 +2,10 @@ from flask_admin import Admin
 from flask_admin.contrib import sqla
 from flask_admin.contrib.sqla import ModelView
 from app.ext.db import db
-from app.ext.db.models import Simulation
+from app.ext.db.models import Dealership, Simulation, Items, Order, OrderItems, Result
+
+
+
 
 from flask_admin.base import AdminIndexView
 from flask_login import login_required
@@ -23,5 +26,24 @@ def init_app(app):
     admin.add_view(
         ModelView(Simulation, db.session)
     )  # se nao quer especializar uma classe pode-se usar o ModelView direto.
+    admin.add_view(
+        ModelView(Dealership, db.session)
+    )
+    admin.add_view(
+        ModelView(Items, db.session)
+    )
+    admin.add_view(
+        ModelView(Order, db.session)
+    )
+    admin.add_view(
+        ModelView(OrderItems, db.session)
+    )
+    admin.add_view(
+        ModelView(Result, db.session)
+    )
+    
+    
+    
+    
     # Adicionar o model de Resultados
     # TODO: Traduzir para pt-br.
