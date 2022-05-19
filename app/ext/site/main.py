@@ -2,7 +2,9 @@ from flask import current_app, flash, request, render_template, redirect, url_fo
 from flask import Blueprint
 from app import email
 from app.ext.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.ext.main.forms import NewSimulationForm, InfoUserForm
 from app.ext.auth.models import User 
+from app.ext.db.models import Dealership, Simulation, Items, OrderItems, Order, Result
 from app.ext.db import db 
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
@@ -152,7 +154,32 @@ def user(username):
 
 
 
+@bp.route('/new_simulation', methods=['GET', 'POST'])
+#@login_required
+def new_simulation():  
+    print('linha 160')  
+    form = InfoUserForm()
+    print('linha 162', form)
+    if form.validate_on_submit():
+        concessionaria = Dealership(name=form.dealership.data, on_menu=True, energy_bill=form.energy_bill.data)
+        db.session.add(concessionaria)
+        db.session.commit()
+        flash('O item foi adicionado para simulação.')
+    return render_template('new_simulation.html', form=form)
 
+    
+    """
+    if form.validate_on_submit():
+        concessionaria = Dealership(name=form.dealership.data, on_menu=True, energy_bill=form.energy_bill.data)
+        db.session.add(concessionaria)
+        db.session.commit()
+        flash('O item foi adicionado para simulação.')        
+        #calcularcusto()
+        print('linha 170')
+        return redirect(url_for('site.new_simulation'))
+    print('não validado')    
+    return render_template('teste.html', title='Simulações', form=form)
+    """
 
 
 

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block top %}
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1>Econovolt</h1>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block main %}
+
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+      {{ form.dealership.label }} <br>
+      {{ form.dealership(size=32) }}
+      {% for error in form.dealership.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+  </p>
+  <p>
+      {{ form.energy_bill.label }} <br>
+      {{ form.energy_bill(size=32) }}
+      {% for error in form.energy_bill.errors %}
+      <span style="color:red;">[{{ error }}]</span>
+      {% endfor %}
+  </p>
+  
+</p>  
+  <p>{{ form.submit() }}</p>
+
+</form>
+
+{% endblock main %}
