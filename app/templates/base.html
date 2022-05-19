@@ -18,7 +18,7 @@
     {% block nav %}
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="#">
           <img src="{{ url_for('static', filename='img/logo.jpeg') }}" height="50">
           <br>
           <strong>Econovolt</strong>
@@ -77,15 +77,19 @@
       </div>
     </nav>
     {% endblock nav %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <span style="color:red;">{{ message }}</span>
+       
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+    </div>
+
     {% block content %} {% endblock %}
 
 {% block top %} {% endblock top %}

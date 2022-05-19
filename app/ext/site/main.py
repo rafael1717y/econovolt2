@@ -28,7 +28,6 @@ bp = Blueprint("site", __name__)
 # ------------------------------
 @bp.route("/")
 @bp.route('/index')
-@login_required
 def index():
     current_app.logger.debug("Entrei na função index")
     return render_template("index.html", title="Home Page")
