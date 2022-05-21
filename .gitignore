@@ -49,3 +49,5 @@ pendencias.txt
 /**.secrets.*
 /**anot.txt.*
 /**.txt.*
+.venv
+/venv 
