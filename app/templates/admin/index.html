@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block top %}
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1>Econovolt</h1>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="row pad">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-body text-center">
+				<h3 class="bold"><i class="glyphicon glyphicon-dashboard"></i> Admin Dashboard</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<ul class="summary">
+			<li class="">Simulações completas <span class="badge">5</span></li>
+			<li class="">Simulações pendentes<span class="badge">3</span></li>
+			
+		</ul>
+	</div>
+</div>
+<div class="row pad">
+	<div class="col-lg-6 pad">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h3 class="panel-title">Simulações realizadas</h3>
+			</div>
+			<div class="panel-body">
+				Simulações relizadas
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>ID</th><th>REF</th><th>Usuário</th><th>Total</th><th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><a href="./view-simulation.html">EF45AVH</a></td>
+							<td>Peter Holland</td>
+							<td>&dollar;50.99</td>
+							<td><span class="badge">Concluída</span></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><a href="./view-simulation.html">ZSD03DDC</a></td>
+							<td>Kyle Jenner</td>
+							<td>&dollar;43.99</td>
+							<td><span class="badge">Concluída</span></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><a href="./view-simulation.html">KDJDPE2</a></td>
+							<td>Daniel Monroe</td>
+							<td>&dollar;29.99</td>
+							<td><span class="badge">Pendente</span></td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td><a href="./view-simulation.html">AWDADD22</a></td>
+							<td>Molly Anderson</td>
+							<td>&dollar;22.99</td>
+							<td><span class="badge">Pendente</span></td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td><a href="../view-simulation.html">AEEACCC</a></td>
+							<td>James Cane</td>
+							<td>&dollar;100.00</td>
+							<td><span class="badge">Concluída</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 pad">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Itens disponíveis</h3>
+			</div>
+			<div class="panel-body">
+				Item
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>#</th><th>Nome</th><th>Potência</th><
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Geladeira</td>
+							<td>100 Kwh</td>
+							
+						</tr>						
+						<tr>
+                            <td>2</td>
+							<td>Ar-condicionado</td>
+							<td>100 Kwh</td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock main %}
