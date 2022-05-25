@@ -25,7 +25,7 @@
 		<ul class="summary">
 			<li class="">Simulações completas <span class="badge">5</span></li>
 			<li class="">Simulações pendentes<span class="badge">3</span></li>
-			
+			<li class="">Total de itens<span class="badge">{{ items|length }}</span></li>
 		</ul>
 	</div>
 </div>
@@ -103,17 +103,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% for item in items %}
 						<tr>
-							<td>1</td>
-							<td>Geladeira</td>
-							<td>100 Kwh</td>
-							
-						</tr>						
-						<tr>
-                            <td>2</td>
-							<td>Ar-condicionado</td>
-							<td>100 Kwh</td>							
+							<td>{{ item.id }}</td>
+							<td>{{ item.name}}</td>
+							<td>{{ item.average_power }}</td>							
 						</tr>
+						{% endfor %}						
+						
 					</tbody>
 				</table>
 			</div>

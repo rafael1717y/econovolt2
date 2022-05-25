@@ -40,13 +40,13 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="./"><i class="glyphicon glyphicon-dashboard"></i> Admin Dashboard</a>
+                            <a href="{{ url_for('site.admin') }}"><i class="glyphicon glyphicon-dashboard"></i> Admin Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Add Product</a>
+                            <a href="{{ url_for('site.add') }}"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar um Item</a>
                         </li>
                         <li>
-                            <a href="../"><i class="glyphicon glyphicon-chevron-left"></i> Back To Front</a>
+                            <a href="{{ url_for('site.index') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->

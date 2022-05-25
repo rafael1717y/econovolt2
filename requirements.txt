@@ -26,6 +26,7 @@ Flask-Security==3.0.0
 flask-shell-ipython==0.4.1
 flask-simplelogin==0.1.1
 Flask-SQLAlchemy==2.5.1
+Flask-Uploads==0.2.1
 Flask-WTF==0.15.1
 greenlet==1.1.2
 gunicorn==20.1.0
