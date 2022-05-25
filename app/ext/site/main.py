@@ -153,35 +153,7 @@ def user(username):
     return render_template('user.html', user=user, simulations=simulations)
 
 
-
-@bp.route('/new_simulation', methods=['GET', 'POST'])
-#@login_required
-def new_simulation():  
-    print('linha 160')  
-    form = InfoUserForm()
-    print('linha 162', form)
-    if form.validate_on_submit():
-        concessionaria = Dealership(name=form.dealership.data, on_menu=True, energy_bill=form.energy_bill.data)
-        db.session.add(concessionaria)
-        db.session.commit()
-        flash('O item foi adicionado para simulação.')
-    return render_template('new_simulation.html', form=form)
-
-    
-    """
-    if form.validate_on_submit():
-        concessionaria = Dealership(name=form.dealership.data, on_menu=True, energy_bill=form.energy_bill.data)
-        db.session.add(concessionaria)
-        db.session.commit()
-        flash('O item foi adicionado para simulação.')        
-        #calcularcusto()
-        print('linha 170')
-        return redirect(url_for('site.new_simulation'))
-    print('não validado')    
-    return render_template('teste.html', title='Simulações', form=form)
-    """
-
-# Logs 
+#Logs 
 
 def log_request(req, res):
     with open('econovoltt.log', 'a') as log:
@@ -199,3 +171,48 @@ def view_the_log():
                 contents[-1].append(escape(item))
     titles = ('Form Data', 'Remote addr', 'User_agent', 'Results')
     return render_template('viewlog.html', the_title='Logs', the_row_titles=titles, the_data=contents, )
+
+
+
+
+
+@bp.route('/new_simulation', methods=['GET', 'POST'])
+#@login_required
+def new_simulation():  
+    print('linha 160')  
+    return render_template('new_simulation.html')
+
+    
+
+# Exibe informações detalhadas de um item
+@bp.route('/item', methods=['GET', 'POST'])
+def item():
+    return render_template('view_item.html')
+
+
+
+
+# Rotas admin
+
+@bp.route('/admin2')
+def admin():
+    return render_template('admin/index.html', admin=True)
+
+
+
+@bp.route('/admin2/add')
+def add():
+    return render_template('admin/add-item.html', admin=True)
+
+
+
+@bp.route('/admin2/view_simulation')
+def order():
+    return render_template('admin/view-simulation.html', admin=True)
+
+
+
+
+
+
+#
