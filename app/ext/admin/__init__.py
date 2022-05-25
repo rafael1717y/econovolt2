@@ -2,7 +2,7 @@ from flask_admin import Admin
 from flask_admin.contrib import sqla
 from flask_admin.contrib.sqla import ModelView
 from app.ext.db import db
-from app.ext.db.models import Dealership, Simulation, Items, Order, OrderItems, Result
+#from app.ext.db.models import Dealership, Simulation, Items, Order, OrderItems, Result
 
 
 
@@ -23,27 +23,6 @@ def init_app(app):
     admin.name = app.config.get("ADMIN_NAME", "Econovolt")
     admin.template_mode = app.config.get("ADMIN_TEMPLATE_MODE", "bootstrap2")
     admin.init_app(app)
-    admin.add_view(
-        ModelView(Simulation, db.session)
-    )  # se nao quer especializar uma classe pode-se usar o ModelView direto.
-    admin.add_view(
-        ModelView(Dealership, db.session)
-    )
-    admin.add_view(
-        ModelView(Items, db.session)
-    )
-    admin.add_view(
-        ModelView(Order, db.session)
-    )
-    admin.add_view(
-        ModelView(OrderItems, db.session)
-    )
-    admin.add_view(
-        ModelView(Result, db.session)
-    )
-    
-    
-    
     
     # Adicionar o model de Resultados
     # TODO: Traduzir para pt-br.

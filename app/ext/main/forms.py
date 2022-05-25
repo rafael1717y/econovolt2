@@ -1,7 +1,20 @@
+from typing import Text
 from flask import request 
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import ValidationError, DataRequired
+
+
+
+class AddItem(FlaskForm):
+    name = StringField("Nome")
+    total_days_of_use_in_month = IntegerField("Dias de uso em um mês")
+    average_daily_use = IntegerField("Média de uso diário")
+    average_power  = IntegerField("Potência média")
+    description = TextAreaField("Descrição")
+    image = FileField('Image') # validar depois
+
 
 
 
