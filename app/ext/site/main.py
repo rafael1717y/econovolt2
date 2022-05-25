@@ -11,9 +11,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 from app.email import send_password_reset_email
 import pdb
-
-from flask_uploads import UploadSet, configure_uploads, IMAGES
-photos = UploadSet('photos', IMAGES)
+from werkzeug.utils import secure_filename
+import os
 
 
 """
@@ -217,23 +216,18 @@ def add():
         print(form.average_daily_use.data)
         print(form.average_power.data)
         print(form.description.data)
-        print(form.image.data)
-
-        image_url = photos.url(photos.save(form.image.data))
-        print('linha 218>> image_url', image_url)
-
-
+               
         ## observar esta com itens [unique]
         new_item = Item(name=form.name.data, total_days_of_use_in_month=form.total_days_of_use_in_month.data,
           average_daily_use=form.average_daily_use.data, average_power=form.average_power.data, 
-          description=form.description.data, image=image_url)
+          description=form.description.data)
 
         db.session.add(new_item)
         db.session.commit()
         print('linha 255')
         
-        return redirect(url_for('site.admin'))
-    
+        return redirect(url_for('site.admin'))        
+
     return render_template('admin/add-item.html', admin=True, form=form)
 
 
