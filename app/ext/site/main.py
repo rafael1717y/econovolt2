@@ -1,10 +1,11 @@
 from email.mime import image
+from itertools import product
 from unicodedata import name
-from flask import current_app, flash, jsonify, request, render_template, redirect, url_for, escape
+from flask import current_app, flash, jsonify, request, render_template, redirect, url_for, escape, session
 from flask import Blueprint
 from app import email
 from app.ext.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.ext.main.forms import AddItem, NewSimulationForm, InfoUserForm
+from app.ext.main.forms import AddItem, AddToSimulator, NewSimulationForm, InfoUserForm
 from app.ext.auth.models import Item, User 
 from app.ext.db import db 
 from flask_login import current_user, login_required, login_user, logout_user
@@ -191,7 +192,79 @@ def new_simulation():  ### mostra os itens disponíveis para escolha [homepage?]
 # Exibe informações detalhadas de um item
 @bp.route('/item/<id>', methods=['GET', 'POST'])
 def item(id):
-    return render_template('view_item.html')
+    item = Item.query.filter_by(id=id).first()
+
+    form = AddToSimulator()
+
+    return render_template('view_item.html', item=item, form=form)
+
+
+@bp.route('/quick_add/<id>')
+def quick_add(id):
+    print('l 204 - quick add')
+    if 'simulator' not in session:
+        session['simulator'] = []
+        
+    session['simulator'].append({'id':id, 'quantity': 1})
+    session.modified = True
+    
+    print('l 209', )
+    # TODO: flash messages 
+    flash('Incluído incluído!')
+    return redirect(url_for('site.new_simulation')) ## redirecionar pra msm página com os itens dps
+
+
+
+@bp.route('/add_to_simulator', methods=["POST"])
+def add_to_simulator():
+    print('l 204')
+    
+    
+
+    if 'simulator' not in session:
+        session['simulator'] = []
+    form = AddToSimulator()
+    if form.validate_on_submit():        
+        print("Quantidade >> ", form.quantity.data)
+        print("ID >>", form.id.data)
+        session['simulator'].append({'id': form.id.data, 'quantity': form.quantity.data})
+        session.modified = True
+
+    return redirect(url_for('site.index'))
+
+
+@bp.route('/simulator') #cart
+def simulator():
+    
+    index = 0
+    print("Session>>>", session['simulator'])    
+    aparelhos = []
+    
+    for item in session['simulator']:
+        print('l 239', item)
+        aparelho = Item.query.filter_by(id=item['id']).first()
+        print('l 241', aparelho)
+        quantity = int(item['quantity'])
+        print('l 243', quantity)
+        aparelhos.append({'id': aparelho.id, 'name':aparelho.name, 'quantity': quantity, 'index': index})
+        index += 1
+
+    print('Lista de aparelhos >>', aparelhos)  # lista com o json de cada item incluído na simulacao
+   
+    return render_template('simulator.html', aparelhos=aparelhos)
+
+
+
+
+# Estou aqui
+@bp.route('/remove_from_simulator/<index>')
+def remove_from_cart(index):
+    del session['simulator'][index]
+    return redirect(url_for('simulator'))
+
+
+
+
 
 
 

@@ -48,6 +48,13 @@
                         <li>
                             <a href="{{ url_for('site.index') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
                         </li>
+                        <li>
+                          <a href="{{ url_for('site.new_simulation') }}"><i class="glyphicon glyphicon-chevron-left"></i>Nova Simulação</a>
+                      </li>
+                      <li>
+                        <a href="{{ url_for('site.simulator') }}"><i class="glyphicon glyphicon-chevron-left"></i>Itens no simulador</a>
+                    </li>
+                    
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -76,10 +83,15 @@
             Home
           </a>
     
-          <a class="navbar-item" href="{{ url_for('site.simulations') }}">
-            Simulações
+          <a class="navbar-item" href="{{ url_for('site.new_simulation') }}">
+            Simular
           </a>
     
+          <a class="navbar-item" href="{{ url_for('site.simulator') }}">
+            Itens na simulação
+          </a>
+    
+
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Saiba mais

@@ -12,7 +12,7 @@ from flask import (
 from flask_login import current_user, login_required
 from app import db
 from app.ext.main.forms import NewSimulationForm
-from app.models import User, Simulation
+from app.ext.auth.models import User, Simulation
 from app.ext.main import bp
 import pdb
 
