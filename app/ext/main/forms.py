@@ -2,7 +2,7 @@ from typing import Text
 from flask import request 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
-from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField, HiddenField
 from wtforms.validators import ValidationError, DataRequired
 
 
@@ -16,6 +16,10 @@ class AddItem(FlaskForm):
     # colocar imagens dos itens ?
 
 
+
+class AddToSimulator(FlaskForm):
+    quantity = IntegerField('Quantity')
+    id = HiddenField('ID')
 
 
 # TODO: separ

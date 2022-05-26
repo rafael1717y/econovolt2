@@ -23,24 +23,24 @@
 				<li data-target="#carousel-id" data-slide-to="1" class=""></li>
 			</ol>
 			<div class="carousel-inner">
-				<div class="item active" style="height: 300px;">
-					<img alt="First slide" src="{{ url_for('static', filename='imgs/1.jpg') }}" style="width: 100%;">
+				<div class="item active" style="height: 250px;">
+					<img alt="First slide" src="{{ url_for('static', filename='imgs/img20.jpeg') }}" style="width: 100%;">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>Amazing Autumn Wears</h1>
+							<h1>Título</h1>
 							<p>
-								Get the most trendy outfits to go with the season
+								Texto
 							</p>
 						</div>
 					</div>
 				</div>
-				<div class="item" style="height: 300px;">
-					<img alt="Second slide" src="{{ url_for('static', filename='imgs/2.jpg') }}" style="width: 100%;">
+				<div class="item" style="height: 250px;">
+					<img alt="Second slide" src="{{ url_for('static', filename='imgs/img30.jpeg') }}" style="width: 100%;">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>Amazing Autumn Wears</h1>
+							<h1>Texto Carrossel</h1>
 							<p>
-								Get the most trendy outfits to go with the season
+								Texto Carrossel
 							</p>
 						</div>
 					</div>
@@ -86,7 +86,7 @@
 						<a href="{{ url_for('site.item', id=item.id) }}" class="btn btn-primary btn-sm"> <!--./view-product.html-->
 							<i class="glyphicon glyphicon-eye-open"></i> Visualizar
 						</a>
-						<a href="#" class="btn btn-default btn-sm">
+						<a href="{{ url_for('site.quick_add', id=item.id) }}" class="btn btn-default btn-sm">
 							<i class="glyphicon glyphicon-shopping-cart"></i> Adicionar 
 						</a>
 					</p>
