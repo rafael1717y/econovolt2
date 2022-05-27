@@ -12,7 +12,6 @@ import jwt
 from flask import current_app, url_for
 
 
-# TODO: Modelar banco de dados no vertabelo
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -63,8 +62,7 @@ class Item(db.Model):
     average_daily_use = db.Column(db.Integer)  # em minutos apnas ?
     average_power = db.Column(db.Integer)
     description = db.Column(db.String(500))
-    image = db.Column(db.String(100))
-
+    orders = db.relationship('Order_Item', backref='item', lazy=True)
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,6 +71,13 @@ class Order(db.Model):
     state = db.Column(db.String(25))
     dealership = db.Column(db.String(25))
     items = db.relationship('Order_Item', backref='order', lazy=True)
+
+    def order_total(self):
+        # juntar as tabelas - multiplicará um aparelho * potência dele.
+        return db.session.query(db.func.sum(Order_Item.quantity * Item.average_power)).join(Item).filter(Order_Item.order_id == self.id).scalar()
+
+    def quantity_total(self):
+        return db.session.query(db.func.sum(Order_Item.quantity)).filter(Order_Item.order_id == self.id).scalar()
 
 
 class Order_Item(db.Model):  # 3 produtos -> 3 itens nessa tabela.

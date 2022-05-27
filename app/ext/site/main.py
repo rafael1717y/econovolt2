@@ -1,7 +1,4 @@
-from crypt import methods
-from email.mime import image
-from itertools import product
-from unicodedata import name
+import random
 from flask import (
     current_app,
     flash,
@@ -204,9 +201,6 @@ def view_the_log():
         the_data=contents,
     )
 
-
-# -----------------------------------------------
-# PAREI AQUI
 @bp.route("/new_simulation", methods=["GET", "POST"])
 # @login_required
 def new_simulation():  ### mostra os itens disponíveis para escolha [homepage?]
@@ -265,49 +259,9 @@ def add_to_simulator():
     return redirect(url_for("site.index"))
 
 
-@bp.route("/simulator")  # cart
-def simulator():
-    """
-    index = 0
-    print("Session>>>", session["simulator"])
-    aparelhos = []
-
-    for item in session["simulator"]:
-        print("l 239", item)
-        aparelho = Item.query.filter_by(id=item["id"]).first()
-        print("l 241", aparelho)
-        quantity = int(item["quantity"])
-        print("l 243", quantity)
-        aparelhos.append(
-            {
-                "id": aparelho.id,
-                "name": aparelho.name,
-                "quantity": quantity,
-                "index": index,
-            }
-        )
-        index += 1
-
-    print(
-        "Lista de aparelhos >>", aparelhos
-    )  # lista com o json de cada item incluído na simulacao
-    """
-    aparelhos = handle_cart()
-    return render_template("simulator.html", aparelhos=aparelhos)
-
-
-@bp.route("/remove/<index>")  # methods=["POST"] # remove do simulador
-def remove(index):
-    print("l 262 - remove_from_simulator")
-    del session["simulator"][int(index)]
-    session.modified = True
-    print("l 263", session["simulator"])
-    return redirect(url_for("site.simulator"))
-
-
 def handle_cart():
     index = 0
-    print("Session>>>", session["simulator"])
+    # print("Session>>>", session["simulator"])
     aparelhos = []
 
     for item in session["simulator"]:
@@ -333,25 +287,45 @@ def handle_cart():
     return aparelhos
 
 
+@bp.route("/simulator")  # cart
+def simulator():
+    aparelhos = handle_cart()
+    return render_template("simulator.html", aparelhos=aparelhos)
 
 
+@bp.route("/remove/<index>")  # methods=["POST"] # remove do simulador
+def remove(index):
+    print("l 262 - remove_from_simulator")
+    del session["simulator"][int(index)]
+    session.modified = True
+    print("l 263", session["simulator"])
+    return redirect(url_for("site.simulator"))
 
 
-@bp.route("/checkout", methods=['GET', 'POST'])
+@bp.route("/checkout", methods=["GET", "POST"])
 def checkout():
     form = Checkout()
     if form.validate_on_submit():
         aparelhos = handle_cart()
         order = Order()
         form.populate_obj(order)
-        order.reference = 'ABCDE'
+        order.reference = "".join([random.choice("ABCDE") for _ in range(10)])
         # parei aqui
-        """
         for aparelho in aparelhos:
-            order_item = Order_Item(quantity=, product_id=)
-        """
-        
+            order_item = Order_Item(
+                quantity=aparelho["quantity"], item_id=aparelho["id"]
+            )
+            order.items.append(order_item)
 
+        db.session.add(order)
+        db.session.commit()
+        print("dados enviados")
+
+        session["simulator"] = []
+        session.modified = True
+
+        # depois renderizar template para página onde serão exibidos os cálculos
+        return redirect(url_for("site.index"))
 
     return render_template("checkout.html", form=form)
 
@@ -364,7 +338,10 @@ def admin():
     print("linha 202")
     items = Item.query.all()
     print("Primeiro item do db >>", items[0].name)
-    return render_template("admin/index.html", admin=True, items=items)
+
+    orders = Order.query.all()
+
+    return render_template("admin/index.html", admin=True, items=items, orders=orders)
 
 
 @bp.route("/admin2/add", methods=["GET", "POST"])
@@ -395,9 +372,10 @@ def add():
     return render_template("admin/add-item.html", admin=True, form=form)
 
 
-@bp.route("/admin2/view_simulation")  # order
-def order():
-    return render_template("admin/view-simulation.html", admin=True)
+@bp.route("/admin2/view_simulation/<order_id>")  # order
+def order(order_id):
+    order = Order.query.filter_by(id=int(order_id)).first()
+    return render_template("admin/view-simulation.html", order=order, admin=True)
 
 
 #
