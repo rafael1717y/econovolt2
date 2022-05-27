@@ -13,7 +13,7 @@
 
 {% block main %}
 
-<h1>Simulador[Cart] </h1>
+<h1>Simulador </h1>
 <div class="row">
 	<div class="col-lg-8">
 		<h3 class="bold">
@@ -34,14 +34,12 @@
 					</div>
 					<div class="col-lg-4">
 						<h3 class="bold">{{ aparelho['name'] }}</h3>
-						<p> </p>
 						<br />
 						<p>
-							<button type="button" class="btn btn-danger btn-xs">
-                                <a href="">
+							<a href="{{ url_for('site.remove', index=aparelho['index']) }}">
+							<button type="button" class="btn btn-danger btn-xs"> 							                               
 								<i class="glyphicon glyphicon-trash"></i>
-                                </a>
-							</button>
+                            </button></a>
 						</p>
 					</div>
 					<div class="col-lg-2">
@@ -68,8 +66,12 @@
 				
 			</div>
 			<div class="panel-footer">
-				<a href="./checkout.html" class="btn btn-primary btn-sm">
+				<a href="{{ url_for('site.checkout') }}" class="btn btn-primary btn-sm">
 					Enviar simulação <i class="glyphicon glyphicon-chevron-right"></i>
+				</a>
+				<!---Conferir rota-->
+				<a href="{{ url_for('site.index') }}" class="btn btn-primary btn-sm">
+					Continuar adicionando itens <i class="glyphicon glyphicon-chevron-left"></i>
 				</a>
 				
 			</div>

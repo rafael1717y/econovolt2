@@ -39,3 +39,16 @@ class NewSimulationForm(FlaskForm):
     hours_of_daily_use  = IntegerField("Tempo de uso em horas:", validators=[DataRequired()], ) 
     potency = IntegerField("Potência em W:", validators=[DataRequired()])
     submit = SubmitField(label=('Adicionar'))
+
+
+
+class Checkout(FlaskForm):
+    name = StringField("Nome")
+    state = SelectField("Estado", choices=["MG", "SP", "RJ"], option_widget=None, validate_choice=True)
+    dealership = SelectField("Concessionária de Energia:", choices=["Cemig", "Eletropaulo"], option_widget=None, validate_choice=True) 
+
+
+
+
+
+
