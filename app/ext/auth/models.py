@@ -13,11 +13,16 @@ from flask import current_app, url_for
 
 
 class User(UserMixin, db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     admin = db.Column(db.Boolean)
+    simulacoes = db.relationship('Order', backref='author', lazy='dynamic')
+
+    def __repr__(self):
+        return "<User {}>".format(self.username)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -56,6 +61,7 @@ class User(UserMixin, db.Model):
 
 
 class Item(db.Model):
+    __tablename__ = "item"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
     total_days_of_use_in_month = db.Column(db.Integer)
@@ -64,15 +70,17 @@ class Item(db.Model):
     description = db.Column(db.String(500))
     orders = db.relationship('Order_Item', backref='item', lazy=True)
 
+
 class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = "order"
+    id = db.Column('id', db.Integer, primary_key=True)
     reference = db.Column(db.String(7))
     name = db.Column(db.String(25))
     state = db.Column(db.String(25))
     dealership = db.Column(db.String(25))
     items = db.relationship('Order_Item', backref='order', lazy=True)
-
-
+    user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+    
     def order_total(self):
         # juntar as tabelas - multiplicará um aparelho * potência dele.
         return db.session.query(db.func.sum(Order_Item.quantity * Item.average_power)).join(Item).filter(Order_Item.order_id == self.id).scalar()
@@ -81,7 +89,12 @@ class Order(db.Model):
         return db.session.query(db.func.sum(Order_Item.quantity)).filter(Order_Item.order_id == self.id).scalar()
 
 
+    def __repr__(self):
+        return "<Order de nome {} do usuário de id {}".format(self.name, self.user_id)
+
+
 class Order_Item(db.Model):  # 3 produtos -> 3 itens nessa tabela.
+    __tablename__ = "order_item"
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
     quantity = db.Column(db.Integer)  # demais itens fazer query na tabela de itens.

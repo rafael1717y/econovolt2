@@ -12,6 +12,12 @@
 
 
 {% block main %}
-<h1>Adicione os itens para simulação</h1>
 
+<h1>Hi, {{ current_user.username }}!</h1>
+
+{% for simulacao in simulacoes %}
+
+<div><p> Simulou: <b>{{ simulacao}}</b></p></div>
+
+{% endfor %}
 {% endblock main %}
