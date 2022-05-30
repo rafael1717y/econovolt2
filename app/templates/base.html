@@ -115,8 +115,8 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary" href="{{ url_for('site.register') }}"><strong>Cadastrar</strong></a>
               {% if current_user.is_anonymous %}
+              <a class="button is-primary" href="{{ url_for('site.register') }}"><strong>Cadastrar</strong></a>
               <a class="button is-light" href="{{ url_for('site.login') }}">Entrar</a>
               {% else %}
               <a class="button is-light" href="{{ url_for('site.user', username=current_user.username) }}">Perfil</a>

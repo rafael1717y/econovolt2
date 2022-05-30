@@ -13,7 +13,6 @@
 
 {% block main %}
 
-<h1>Simulador </h1>
 <div class="row">
 	<div class="col-lg-8">
 		<h3 class="bold">
@@ -44,9 +43,9 @@
 					</div>
 					<div class="col-lg-2">
 						<h3>Quantidade</h3>
-						<p>
+						<h4>
 						{{ aparelho['quantity'] }}
-						</p>
+						</h4>
 					</div>
 					
 				</div>
@@ -58,23 +57,28 @@
 
 	<div class="col-lg-4">
 		<h3 class="bold">
-			<i class="glyphicon glyphicon-th-list"></i> Resumo
+			<i class="glyphicon glyphicon-th-list"></i> Prosseguir
 		</h3>
 
 		<div class="panel panel-primary">
 			<div class="panel-body">
 				
 			</div>
+			
 			<div class="panel-footer">
 				<a href="{{ url_for('site.checkout') }}" class="btn btn-primary btn-sm">
 					Enviar simulação <i class="glyphicon glyphicon-chevron-right"></i>
 				</a>
-				<!---Conferir rota-->
-				<a href="{{ url_for('site.index') }}" class="btn btn-primary btn-sm">
+			</div>
+
+			<br>
+			<div class="panel-footer">
+			<!---Conferir rota-->
+				<a href="{{ url_for('site.new_simulation') }}" class="btn btn-primary btn-sm">
 					Continuar adicionando itens <i class="glyphicon glyphicon-chevron-left"></i>
 				</a>
-				
 			</div>
+		
 		</div>
 	</div>
 </div>

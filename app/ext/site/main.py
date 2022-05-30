@@ -201,8 +201,9 @@ def view_the_log():
         the_data=contents,
     )
 
+
 @bp.route("/new_simulation", methods=["GET", "POST"])
-# @login_required
+@login_required
 def new_simulation():  ### mostra os itens disponíveis para escolha [homepage?]
     print("linha 160")
     items = Item.query.all()
@@ -288,6 +289,7 @@ def handle_cart():
 
 
 @bp.route("/simulator")  # cart
+@login_required
 def simulator():
     aparelhos = handle_cart()
     return render_template("simulator.html", aparelhos=aparelhos)
@@ -303,7 +305,7 @@ def remove(index):
 
 
 @bp.route("/checkout", methods=["GET", "POST"])
-def checkout():
+def checkout():    
     form = Checkout()
     if form.validate_on_submit():
         aparelhos = handle_cart()
@@ -319,13 +321,12 @@ def checkout():
 
         db.session.add(order)
         db.session.commit()
-        print("dados enviados")
-
+        
         session["simulator"] = []
         session.modified = True
 
         # depois renderizar template para página onde serão exibidos os cálculos
-        return redirect(url_for("site.index"))
+        return redirect(url_for('site.admin'))
 
     return render_template("checkout.html", form=form)
 

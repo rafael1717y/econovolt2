@@ -17,7 +17,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-body text-center">
-				<h3 class="bold"><i class="glyphicon glyphicon-dashboard"></i> Admin Dashboard</h3>
+				<h3 class="bold"><i class="glyphicon glyphicon-dashboard"></i>Painel de simulações</h3>
 			</div>
 		</div>
 	</div>
@@ -35,14 +35,12 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Simulações realizadas</h3>
 			</div>
-			<div class="panel-body">
-				Simulações relizadas
-			</div>
+			
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>ID</th><th>Ref. da Simulação<object data="" type=""></object></th><th>Usuário</th><th>Potência Total Kwh</th><th>Status</th>
+							<th>ID</th><th>Ref. da Simulação</th><th>Usuário</th><th>Potência Calculada</th><th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -61,35 +59,7 @@
 		</div>
 	</div>
 
-	<div class="col-lg-6 pad">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Itens disponíveis</h3>
-			</div>
-			<div class="panel-body">
-				Item
-			</div>
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th>#</th><th>Nome</th><th>Potência</th><
-						</tr>
-					</thead>
-					<tbody>
-						{% for item in items %}
-						<tr>
-							<td>{{ item.id }}</td>
-							<td>{{ item.name}}</td>
-							<td>{{ item.average_power }}</td>							
-						</tr>
-						{% endfor %}						
-						
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 {% endblock main %}
