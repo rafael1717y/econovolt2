@@ -58,7 +58,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<h6 class="text-center pageTitle">Escolhe alguns dos aparelhos elétricos abaixo para inclusão no simulador:</h6>
+				<h6 class="text-center pageTitle">Escolha alguns dos aparelhos elétricos abaixo para inclusão no simulador:</h6>
 			</div>
 		</div>
 	</div>
@@ -83,10 +83,10 @@
 					</p>
 					<hr />
 					<p>
-						<a href="{{ url_for('site.item', id=item.id) }}" class="btn btn-primary btn-sm"> <!--./view-product.html-->
+						<a href="{{ url_for('site.item', id=item.id) }}" class="btn btn-primary btn-sm"  title="Clique aqui se deseja alterar a quantidade ou visualizar informações de consumo desse item"> <!--./view-product.html-->
 							<i class="glyphicon glyphicon-eye-open"></i> Visualizar
 						</a>
-						<a href="{{ url_for('site.quick_add', id=item.id) }}" class="btn btn-default btn-sm">
+						<a href="{{ url_for('site.quick_add', id=item.id) }}" class="btn btn-default btn-sm" title="Clique para incluir uma unidade desse item no simulador">
 							<i class="glyphicon glyphicon-shopping-cart"></i> Adicionar 
 						</a>
 					</p>
