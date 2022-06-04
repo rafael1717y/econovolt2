@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
   <head>
     
     {% block head %}
@@ -17,8 +17,7 @@
     {% endblock extra_css %}
 
   </head>
-  <body>
-    
+  <body>   
 
     {% block nav %}
     <!---Se admin ir para essa tela-->
@@ -83,31 +82,27 @@
             Home
           </a>
     
-          <a class="navbar-item" href="{{ url_for('site.new_simulation') }}">
+          <a class="navbar-item" href="{{ url_for('site.new_simulation') }}" title="Faça login para realizar uma simulação do seu consumo de energia elétrica" tabindex="1">
             Simular
           </a>
     
-          <a class="navbar-item" href="{{ url_for('site.simulator') }}">
+          <a class="navbar-item" href="{{ url_for('site.simulator') }}" title="Verifique os itens incluídos na simulação" tabindex="2">
             Itens na simulação
           </a>
     
 
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-item has-dropdown is-hoverable" tabindex="3">
             <a class="navbar-link">
               Saiba mais
             </a>
     
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="{{ url_for('site.about') }}">
+              <a class="navbar-item" href="{{ url_for('site.about') }}" tabindex="4">
                 Sobre
               </a>
-              <a class="navbar-item">
-                Contato
-              </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item">
-                Reporte um erro
-              </a>
+              <a class="navbar-item" title= "Clique para visualizar dicas de economia de energia elétrica" tabindex="5">
+                Dicas
+              </a>              
             </div>
           </div>
         </div>
@@ -116,11 +111,11 @@
           <div class="navbar-item">
             <div class="buttons">
               {% if current_user.is_anonymous %}
-              <a class="button is-primary" href="{{ url_for('site.register') }}"><strong>Cadastrar</strong></a>
-              <a class="button is-light" href="{{ url_for('site.login') }}">Entrar</a>
-              {% else %}
-              <a class="button is-light" href="{{ url_for('site.user', username=current_user.username) }}">Perfil</a>
-              <a class="button is-light" href="{{ url_for('site.logout') }}">Sair</a>
+                <a class="button is-primary" href="{{ url_for('site.register') }}" tabindex="6"><strong>Cadastrar</strong></a>
+                <a class="button is-light" href="{{ url_for('site.login') }}" tabindex="7">Entrar</a>
+                {% else %}
+                <a class="button is-light" href="{{ url_for('site.user', username=current_user.username) }}">Perfil</a>
+                <a class="button is-light" href="{{ url_for('site.logout') }}">Sair</a>
               {% endif %}
             </div>
           </div>
@@ -150,9 +145,6 @@
 
 {% block top %} {% endblock top %}
 
-
-
-
     <section class="section">
     <div class="container">
 
@@ -164,8 +156,10 @@
   {% block footer %}
   <footer class="footer">
     <div class="content has-text-centered">
+      <div class="container">
       <p>
-        <strong>Projeto Integrador - </strong> Grupo 63</p>
+        <strong>Projeto Integrador Univesp - </strong> Grupo 63</p>
+      </div>
     </div>
   </footer>
 

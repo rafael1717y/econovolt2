@@ -339,8 +339,6 @@ def checkout():
 
 
 
-
-
 # Visualizar ordens de um usuário
 
 @bp.route("/view", methods=["GET", "POST"])

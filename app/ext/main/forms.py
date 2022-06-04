@@ -22,7 +22,6 @@ class AddToSimulator(FlaskForm):
     id = HiddenField('ID')
 
 
-# TODO: separ
 class InfoUserForm(FlaskForm):
     dealership = SelectField("Concessionária de Energia:", choices=["Cemig", "Eletropaulo"], option_widget=None, validate_choice=True) 
     energy_bill = IntegerField("Valor da sua última conta de energia:",  validators=[DataRequired()])
@@ -32,7 +31,7 @@ class InfoUserForm(FlaskForm):
 
 class NewSimulationForm(FlaskForm):
     dealership = SelectField("Concessionária de Energia:", choices=["Cemig", "Eletropaulo"], option_widget=None, validate_choice=True) 
-    state = SelectField("Estado:", choices=["MG", "SP", "RJ"], option_widget=None, validate_choice=True)
+    state = SelectField("Estado:", choices=["MG", "SP", "RJ", "BA", "RS", "AC"], option_widget=None, validate_choice=True)
     energy_bill = IntegerField("Valor da sua última conta de energia:",  validators=[DataRequired()])
     item = SelectField("Item:", choices=["Geladeira", "Umidificador", "Chuveiro", "TV", "Ar-Condicionado"], option_widget=None, validate_choice=True)
     item_quantity = IntegerField("Quantidade:", validators=[DataRequired()]) 
@@ -41,11 +40,11 @@ class NewSimulationForm(FlaskForm):
     submit = SubmitField(label=('Adicionar'))
 
 
-
-class Checkout(FlaskForm):
-    name = StringField("Nome")
-    state = SelectField("Estado", choices=["MG", "SP", "RJ"], option_widget=None, validate_choice=True)
-    dealership = SelectField("Concessionária de Energia:", choices=["Cemig", "Eletropaulo"], option_widget=None, validate_choice=True) 
+#" ""Comparar valor de entrada da conta com o obtido na simulação"""
+class Checkout(FlaskForm):    
+    name = StringField("nome da simulação")
+    state = SelectField("Estado", choices=["MG", "SP", "RJ", "BA", "RS", "AC"], option_widget=None, validate_choice=True)
+    dealership = SelectField("Concessionária de Energia:", choices=["Cemig", "Energisa", "Eletropaulo"], option_widget=None, validate_choice=True) 
 
 
 
