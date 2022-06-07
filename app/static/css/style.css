@@ -37,3 +37,11 @@ body {
     textarea {
       resize: none;
     }
+
+    .table {
+      margin: 0 auto;
+    }
+
+    .table-td {
+      text-align: center;
+    }

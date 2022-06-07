@@ -19,10 +19,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<h3 class="bold">SIMULACAO {{ order.reference }} de {{ order.name }} </h3>
-
-				<h4>Potência calculada: {{ order.order_total() }} </h4>
-				<h4>Total de itens: {{ order.quantity_total() }} </h4>
-				
+							
 			</div>
 		</div>
 	</div>
@@ -38,7 +35,7 @@
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Id</th><th>Nome</th><th>Potência</th><th>Dias uso/mês</th><th>Quantidade</th><th>Descrição</th><th>Total</th>
+							<th>Id</th><th>Nome</th><th>Potência</th><th>Dias uso/mês</th><th>Quantidade</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,55 +46,56 @@
 							<td>Potência média: {{ item.item.average_power }}</td>
 							<td>Total dias uso mês: {{ item.item.total_days_of_use_in_month }} </td>
 							<td>Quantidade: {{ item.quantity }} </td>
-							<th>Descrição: {{ item.item.description }} </th>
-							<th>Total: {{ order.order_total() }} </th>
-						
+																	
 						</tr>					
 						
 					</tbody>
 					<tfoot>
 						<tr>
-							<th colspan="4" class="text-right">Potência Total </th>
-							<!--TODO: consumo médio mensal do item x qtd-->
-							<th>Potência calculada: {{ item.quantity * item.item.average_power }} </th>
+												
 						</tr>
 					</tfoot>
 					{% endfor %}
+
 				</table>
+				<br>
+				<h4>Total de itens: {{ order.quantity_total() }} </h4>
+				<h4>Potência total calculada: {{ order.order_total() }} Kwh </h4>
+				<h4>Conta estimada: R$ {{ (59 *  order.order_total() / 100) + (4 *  order.order_total() / 100) +  (23 *  order.order_total() / 100) + (14 *  order.order_total() / 100) }}</h4>
 			</div>
 		</div>
 	</div>
 
 
 	<div class="col-lg-6">
-		<h3 class="strong">Informações</h3>
+		
 		<div role="tabpanel">
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active">
-					<a href="#shipping" aria-controls="shipping" role="tab" data-toggle="tab">Info I</a>
+					<a href="#shipping" aria-controls="shipping" role="tab" data-toggle="tab">A</a>
 				</li>
 				<li role="presentation">
-					<a href="#details" aria-controls="details" role="tab" data-toggle="tab">Info II</a>
+					<a href="#details" aria-controls="details" role="tab" data-toggle="tab">B</a>
 				</li>
 			</ul>
 		
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="shipping">
-					<h4 class="bold">Informações complementares</h4>
-					<p><i class="glyphicon glyphicon-user"></i> Nome: <strong>{{ order.name }}</strong></p>
-					<p><i class="glyphicon glyphicon-map-marker"></i> Estado: 
+					<h4 class="bold">Dados consumidor</h4>
+					<p><i class="glyphicon glyphicon-user"></i> Referência da simulação: <strong>{{ order.name }}</strong></p>
+					<p><i class="glyphicon glyphicon-map-marker"></i>Seu estado: 
 						<strong>{{ order.state }}</strong>
 					</p>
-					<p><i class="glyphicon glyphicon-th"></i> Companhia de Energia: <strong>{{ order.dealhership }}</strong></p>
+					<p><i class="glyphicon glyphicon-th"></i> Sua Concessionária Energia: <strong>{{ order.dealhership }}</strong></p>
 					
 					<hr />
 					
 				</div>
 				<div role="tabpanel" class="tab-pane" id="details">
-					<h4 class="bold">Detalhes</h4>
-					<p><i class="glyphicon glyphicon-user"></i> Nome: <strong></strong></p>
+					<h4 class="bold">Dicas de Economia</h4>
+					<p><i class="glyphicon glyphicon-user"></i>
 					<p>
 						<i class="glyphicon glyphicon-envelope"></i> EMAIL: 
 						<strong></strong>
@@ -106,8 +104,42 @@
 			</div>
 		</div>
 	</div>
+</div>
+	
+	<div>
+		
+		<h4>Sua conta de energia é formada pelos quatro pilares abaixo:</h4>
+		<br>
+		<img alt="imagem com quatro quadrados (geração, transmissão, distribuição e encargos)" src="{{ url_for('static', filename='imgs/itensconta.PNG') }}" style="width: 82%;">
+		
+	</div>
 
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Geração</th><th>  Transmissão</th><th>Distribuição</th><th>Encargos</th><th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<td><strong>{{ 59 *  order.order_total() / 100 }}</strong></td>
+				<td><strong>{{ 4 *  order.order_total() / 100 }} </strong></td>
+				<td><strong>{{ 23 *  order.order_total() / 100 }}</strong></td>
+				<td><strong>{{ 14 *  order.order_total() / 100 }}</strong></td>
+				</tr>
+			</tbody>
+			
+					
+		</table>
+		<br>
+		<br>
 
+		*Obs.: A simulação acima é uma estimativa. Os valores apresentados não incluem os tributos (ICMS, PIS/COFINS)
+			e a contribuição de Iluminação Municipal - CIP.
+		
+		
+	</div>
 
 
 
