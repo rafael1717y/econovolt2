@@ -13,8 +13,7 @@
 
 {% block main %}
 
-<h3>Detalhes do item </h3>
-
+<h4> Escolha a quantidade do item e clique em 'Adicionar ao Simulador' ou voltar</h4>
 <div class="row">
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
@@ -41,11 +40,9 @@
 				<h3 class="panel-title">Detalhes</h3>
 			</div>
 			<div class="panel-body">
-				<h4> Aparelho elétrico: {{ item.name }}  </h4> 
-				<h4> Potência média (Kwh): {{ item.average_power}}</h4>
-				<hr/>
-				{{ item.description }}
-				<hr/>
+				<h4> <strong>Aparelho elétrico:</strong> {{ item.name }}  </h4> 
+				<h4> <strong>Potência média (Kwh):</strong> {{ item.average_power}}</h4>
+				
 	
 		<form action="{{ url_for('site.add_to_simulator') }}" method="POST">
 						<div class="row">
@@ -66,9 +63,15 @@
 						</div>
 					</div>
 					<div class="panel-footer">
-						<button type="submit" class="btn btn-primary">
-							<i class="glyphicon glyphicon-shopping-cart"></i> Adicionar ao Simulador
+						<button type="submit" class="btn btn-success">
+							<i class="glyphicon glyphicon-plus"></i> Adicionar ao Simulador
 						</button>
+					</div>
+					<div class="panel-footer">
+						<a href="{{ url_for('site.new_simulation') }}" class="btn btn-info">
+							<i class="glyphicon glyphicon-arrow-left"></i> Voltar 
+						</a>
+						
 					</div>
 		</form>
 		
@@ -88,11 +91,11 @@
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="description">
-					{{ item.description }}
+					<h5>{{ item.description }} </h5>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="shipping">
-					<h3>Média de uso diário</h3>
-					{{ item.average_daily_use}}
+					<h5>Considerando estimativas da <a href="http://www.procelinfo.com.br/main.asp?View=%7BE6BC2A5F-E787-48AF-B485-439862B17000%7D"> Tabela Procel: </a> {{ item.average_daily_use_hours }} horas e {{item.average_daily_use_minutes }} minutos</h5>
+					
 				</div>
 			</div>
 		</div>

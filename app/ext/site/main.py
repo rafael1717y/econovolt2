@@ -396,7 +396,8 @@ def add():
     if form.validate_on_submit():
         print(form.name.data)
         print(form.total_days_of_use_in_month.data)
-        print(form.average_daily_use.data)
+        print(form.average_daily_use_hours.data)
+        print(form.average_daily_use_minutes.data)
         print(form.average_power.data)
         print(form.description.data)
 
@@ -404,7 +405,8 @@ def add():
         new_item = Item(
             name=form.name.data,
             total_days_of_use_in_month=form.total_days_of_use_in_month.data,
-            average_daily_use=form.average_daily_use.data,
+            average_daily_use_hours=form.average_daily_use_hours.data,
+            average_daily_use_minutes=form.average_daily_use_minutes.data,
             average_power=form.average_power.data,
             description=form.description.data,
         )

@@ -12,6 +12,7 @@
 
 
 {% block main %}
+<script src="js/myscript.js"></script>
 
 <div class="row">
 	<div class="col-lg-8">
@@ -24,7 +25,7 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-lg-12">
-						<h4 class="bold">Informações pessoais</h4>
+						<h4 class="bold">Digite seu nome e escolha seu estado de residência:</h4>
 					</div>
                     {{ form.csrf_token }}
 					<div class="col-lg-6">
@@ -41,11 +42,11 @@
 				
 				<div class="row">
 					<div class="col-lg-12">
-						<h4 class="bold">Concessionária</h4>
+						<h4 class="bold">Escolha sua concessionária de energia elétrica</h4>
 					</div>
 					<div class="col-lg-6">
 						<div class="form-group">
-							<label>Concessionária</label>
+							
 							{{ form.dealership(class='form-control') }}
 						</div>
 					</div>
@@ -53,9 +54,12 @@
 
 				
 			</div>
+
+			<link rel="stylesheet" href="">
+
 			<div class="panel-footer">
-				<button type="submit" class="btn btn-primary btn-sm">
-					Enviar
+				<button type="submit" class="btn btn-success" onclick="msg()"> 
+					Enviar 
 				</button>
 			</div>
         </form>

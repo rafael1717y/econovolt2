@@ -39,8 +39,12 @@
 								{{ form.total_days_of_use_in_month(class='form-control') }}
 							</div>
 							<div class="form-group">
-								<label>Tempo médio de uso por dia [EM MINUTOS]</label>
-								{{ form.average_daily_use(class='form-control')}}
+								<label>Tempo médio de uso por dia [em HORAS]</label>
+								{{ form.average_daily_use_hours(class='form-control')}}
+							</div>
+							<div class="form-group">
+								<label>Tempo médio de uso por dia [em MINUTOS]</label>
+								{{ form.average_daily_use_minutes(class='form-control')}}
 							</div>
 								
                             <div class="form-group">
