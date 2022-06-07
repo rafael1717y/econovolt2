@@ -65,7 +65,8 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
     total_days_of_use_in_month = db.Column(db.Integer)
-    average_daily_use = db.Column(db.Integer)  # em minutos apnas ?
+    average_daily_use_hours = db.Column(db.Integer)
+    average_daily_use_minutes = db.Column(db.Integer)  
     average_power = db.Column(db.Integer)
     description = db.Column(db.String(500))
     orders = db.relationship('Order_Item', backref='item', lazy=True)

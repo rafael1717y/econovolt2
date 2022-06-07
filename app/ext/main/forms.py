@@ -10,7 +10,8 @@ from wtforms.validators import ValidationError, DataRequired
 class AddItem(FlaskForm):
     name = StringField("Nome")
     total_days_of_use_in_month = IntegerField("Dias de uso em um mês")
-    average_daily_use = IntegerField("Média de uso diário")
+    average_daily_use_hours = IntegerField("Média de uso diário em horas")
+    average_daily_use_minutes = IntegerField("Média de uso diário em minutos")
     average_power  = IntegerField("Potência média")
     description = TextAreaField("Descrição")
     # colocar imagens dos itens ?
