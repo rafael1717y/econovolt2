@@ -35,6 +35,9 @@
 </form>
 <br>
 <br>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<br>
+<br>
 <p>Novo usuário? <a href="{{ url_for('site.register') }}">Clique aqui para se cadastrar!</a></p>
 <p>Esqueceu sua senha?<a href="{{ url_for('site.reset_password_request') }}">Clique aqui para solicitar uma nova senha.</a></p>
 {% endblock main %}
