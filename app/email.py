@@ -7,9 +7,6 @@ from flask import render_template
 from app.ext.auth import models
 
 
-
-
-
 def send_password_reset_email(user):
     token = user.get_reset_password_token()
     print('>> admin: ', os.environ.get('ADMINS'))
