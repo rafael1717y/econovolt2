@@ -1,4 +1,15 @@
-make.exe --dry-run --always-make --keep-going --print-directory
-'make.exe' n�o � reconhecido como um comando interno
-ou externo, um programa oper�vel ou um arquivo em lotes.
-
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/rafael/Documents/Development/econovolt2'
+find ./ -name '*.pyc' -exec rm -f {} \;
+find ./ -name 'Thumbs.db' -exec rm -f {} \;
+find ./ -name '*~' -exec rm -f {} \;
+rm -rf .cache
+rm -rf build
+rm -rf dist
+rm -rf *.egg-info
+rm -rf htmlcov
+rm -rf .tox/
+rm -rf docs/_build
+pip install -e .[dev] --upgrade --no-cache
+make: Leaving directory '/home/rafael/Documents/Development/econovolt2'
+ 

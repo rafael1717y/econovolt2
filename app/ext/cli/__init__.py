@@ -15,7 +15,6 @@ def init_app(app):
 
     @app.cli.command()
     def list_simulations():
-        # TODO: usar a biblioteca tabulate
         click.echo("lista de simulações")
 
-    # TODO comando para criar uma simulação
+

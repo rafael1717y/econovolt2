@@ -6,7 +6,8 @@ from dynaconf import FlaskDynaconf
 
 
 def init_app(app):
-    # TODO: para settings.toml
+    # Vars config na nuvem. Ex.: # sqlite em dev e postgres em prod # string de con. em
+    # -> env key [DATABASE_URL] em digital ocean
     app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "DATABASE_URL"
@@ -16,8 +17,7 @@ def init_app(app):
     app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS") is not None
     app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
     app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-    app.config["ADMINS"] = ["econovoltsimulador@gmail.com"]
-    
+    app.config["ADMINS"] = ["econovoltsimulador@gmail.com"]    
     if app.debug:
         app.config["DEBUG_TB_TEMPLATE_EDITOR_ENABLED"] = True
         app.config["DEBUG_TB_PROFILER-ENABLED = true"] = True
