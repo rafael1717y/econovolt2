@@ -1,25 +1,27 @@
-from flask import Flask
-from app.ext import config
-import os
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 
+from flask import Flask
+
+from app.ext import config
 
 """Criação do app. As extensões, exceto config, 
 são carregadas pelo Dynaconf (arquivo settings.toml)
 conforme o módulo (desenvolvimento ou produção)."""
 
+
 def create_app():
-    """"Factory para criar um app Flask. """
+    """ "Factory para criar um app Flask."""
     app = Flask(__name__)
     config.init_app(app)
-    #db.init_app(app)
-    #auth.init_app(app)
-    #admin.init_app(app) 
-    #migrate.init_app(app)
-    #cli.init_app(app)
-    #toolbar.init_app(app)
-    #site.init_app(app)
+    # db.init_app(app)
+    # auth.init_app(app)
+    # admin.init_app(app)
+    # migrate.init_app(app)
+    # cli.init_app(app)
+    # toolbar.init_app(app)
+    # site.init_app(app)
     # Boilerplate de Logs
     # -------------------
     if not app.debug:
@@ -30,8 +32,8 @@ def create_app():
         )
         file_handler.setFormatter(
             logging.Formatter(
-                '%(asctime)s  %(name)s  %(levelname)s'
-                'l:%(lineno)d f:%(filename)s: %(message)s'
+                "%(asctime)s  %(name)s  %(levelname)s"
+                "l:%(lineno)d f:%(filename)s: %(message)s"
             )
         )
         file_handler.setLevel(logging.INFO)
@@ -39,5 +41,4 @@ def create_app():
         app.logger.setLevel(logging.INFO)
         app.logger.info(">>> A aplicação iniciou...")
 
-    
     return app

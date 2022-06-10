@@ -1,4 +1,5 @@
 import click
+
 from app.ext.auth.models import User
 from app.ext.db import db
 

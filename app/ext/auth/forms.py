@@ -1,8 +1,10 @@
 from ast import Sub
 from re import sub
+
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms import BooleanField, PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+
 from app.ext.auth.models import (
     User,
 )  # importe da classe User de models da extensão de autenticação

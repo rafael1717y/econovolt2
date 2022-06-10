@@ -1,39 +1,40 @@
+import os
+import pdb
 import random
+
 from flask import (
+    Blueprint,
     current_app,
+    escape,
     flash,
     jsonify,
-    request,
-    render_template,
     redirect,
-    url_for,
-    escape,
+    render_template,
+    request,
     session,
+    url_for,
 )
-from flask import Blueprint
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
+
 from app import email
+from app.email import send_password_reset_email
 from app.ext.auth.forms import (
     LoginForm,
     RegistrationForm,
-    ResetPasswordRequestForm,
     ResetPasswordForm,
+    ResetPasswordRequestForm,
 )
+from app.ext.auth.models import Item, Order, Order_Item, User
+from app.ext.db import db
 from app.ext.main.forms import (
     AddItem,
     AddToSimulator,
-    NewSimulationForm,
-    InfoUserForm,
     Checkout,
+    InfoUserForm,
+    NewSimulationForm,
 )
-from app.ext.auth.models import Item, User, Order, Order_Item
-from app.ext.db import db
-from flask_login import current_user, login_required, login_user, logout_user
-from werkzeug.urls import url_parse
-from app.email import send_password_reset_email
-import pdb
-from werkzeug.utils import secure_filename
-import os
-
 
 """
 1. Criação de um blueprint em main [nome + path import.] para componentização
@@ -305,74 +306,64 @@ def remove(index):
 
 
 @bp.route("/checkout", methods=["GET", "POST"])
-def checkout():  
-   
-    #o = Order(reference='23223', name='teste', state='MG', dealership='Cemig', items=[oi], user=u)
-    form = Checkout()    
-    
+def checkout():
+
+    # o = Order(reference='23223', name='teste', state='MG', dealership='Cemig', items=[oi], user=u)
+    form = Checkout()
+
     if form.validate_on_submit():
         aparelhos = handle_cart()
         order = Order()
         form.populate_obj(order)
-        #order.user_id = current_user
+        # order.user_id = current_user
         order.reference = "".join([random.choice("ABCDE") for _ in range(10)])
         # parei aqui
         for aparelho in aparelhos:
             order_item = Order_Item(
                 quantity=aparelho["quantity"], item_id=aparelho["id"]
             )
-            order.items.append(order_item)        
+            order.items.append(order_item)
 
         db.session.add(order)
         db.session.commit()
-        
+
         session["simulator"] = []
         session.modified = True
 
         # Após finalizar vai para esse view onde são apresentados os resultados
         # @bp.route("/admin2/view_simulation/<order_id>")  # order
 
-        print('linha 334 -order_id>> ', order.id)
-        return redirect(url_for('site.order', order_id=order.id))
+        print("linha 334 -order_id>> ", order.id)
+        return redirect(url_for("site.order", order_id=order.id))
 
     return render_template("checkout.html", form=form)
 
 
-
 # Visualizar ordens de um usuário
 
+
 @bp.route("/view", methods=["GET", "POST"])
-def view():    
-    #user = current_user
-    #user = User.query.filter_by(current_user).first_or_404()
+def view():
+    # user = current_user
+    # user = User.query.filter_by(current_user).first_or_404()
     order = Order.query.all()
-    print('linha 348', current_user)
+    print("linha 348", current_user)
     simulacoes = []
 
     for o in order:
         if current_user:
             conc = o.dealership
             simulacoes.append(conc)
-            print('linha 350', user)
-            print('items', o.items)
-            #print('reference', o.reference)
+            print("linha 350", user)
+            print("items", o.items)
+            # print('reference', o.reference)
 
-    return render_template("teste.html", title='Teste', simulacoes=simulacoes)  
-
-
-
-
-
-
-
-
-
-
-
+    return render_template("teste.html", title="Teste", simulacoes=simulacoes)
 
 
 # Rotas admin
-#------------------------------
+# ------------------------------
+
 
 @bp.route("/admin2")
 def admin():
@@ -382,13 +373,14 @@ def admin():
 
     # filtrar pelo id do usuário
     orders = Order.query.all()
-    #orders = Order.query.filter_by(id=id)
-    #item = Item.query.filter_by(id=id).first()
+    # orders = Order.query.filter_by(id=id)
+    # item = Item.query.filter_by(id=id).first()
 
     return render_template("admin/index.html", admin=True, items=items, orders=orders)
 
 
-#--------------------------------------
+# --------------------------------------
+
 
 @bp.route("/admin2/add", methods=["GET", "POST"])
 def add():
@@ -425,5 +417,3 @@ def add():
 def order(order_id):
     order = Order.query.filter_by(id=int(order_id)).first()
     return render_template("admin/view-simulation.html", order=order, admin=True)
-
-
