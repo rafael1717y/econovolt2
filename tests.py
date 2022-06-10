@@ -1,4 +1,5 @@
 import unittest
+
 from app import create_app
 from app.ext.auth.models import User
 
