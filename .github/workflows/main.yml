@@ -27,7 +27,7 @@ jobs:
           run:
               pip install -r requirements.txt
         - name: Look for style errors
-          run: pflake8
+          run: flake8 tests.py
         - name: Check for importing style
           run: isort . --check --diff 
         - name: Look for auto format errors
