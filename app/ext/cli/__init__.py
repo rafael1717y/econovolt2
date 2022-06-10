@@ -1,6 +1,7 @@
 import click
-from app.ext.db import db
+
 from app.ext.db import models  # noqa
+from app.ext.db import db
 
 
 def init_app(app):
@@ -16,5 +17,3 @@ def init_app(app):
     @app.cli.command()
     def list_simulations():
         click.echo("lista de simulações")
-
-

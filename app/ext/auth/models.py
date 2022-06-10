@@ -1,15 +1,15 @@
-from flask_login import UserMixin
-from datetime import datetime
-from time import time
-from hashlib import md5
 import datetime
-from app.ext.db import db
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-from app.ext.main import login
+from datetime import datetime
 from hashlib import md5
+from time import time
+
 import jwt
 from flask import current_app, url_for
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from app.ext.db import db
+from app.ext.main import login
 
 
 class User(UserMixin, db.Model):
@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     admin = db.Column(db.Boolean)
-    simulacoes = db.relationship('Order', backref='author', lazy='dynamic')
+    simulacoes = db.relationship("Order", backref="author", lazy="dynamic")
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -66,29 +66,37 @@ class Item(db.Model):
     name = db.Column(db.String(50), unique=True)
     total_days_of_use_in_month = db.Column(db.Integer)
     average_daily_use_hours = db.Column(db.Integer)
-    average_daily_use_minutes = db.Column(db.Integer)  
+    average_daily_use_minutes = db.Column(db.Integer)
     average_power = db.Column(db.Integer)
     description = db.Column(db.String(500))
-    orders = db.relationship('Order_Item', backref='item', lazy=True)
+    orders = db.relationship("Order_Item", backref="item", lazy=True)
 
 
 class Order(db.Model):
     __tablename__ = "order"
-    id = db.Column('id', db.Integer, primary_key=True)
+    id = db.Column("id", db.Integer, primary_key=True)
     reference = db.Column(db.String(7))
     name = db.Column(db.String(25))
     state = db.Column(db.String(25))
     dealership = db.Column(db.String(25))
-    items = db.relationship('Order_Item', backref='order', lazy=True)
-    user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-    
+    items = db.relationship("Order_Item", backref="order", lazy=True)
+    user_id = db.Column("user_id", db.Integer, db.ForeignKey("user.id"))
+
     def order_total(self):
         # juntar as tabelas - multiplicará um aparelho * potência dele.
-        return db.session.query(db.func.sum(Order_Item.quantity * Item.average_power)).join(Item).filter(Order_Item.order_id == self.id).scalar()
+        return (
+            db.session.query(db.func.sum(Order_Item.quantity * Item.average_power))
+            .join(Item)
+            .filter(Order_Item.order_id == self.id)
+            .scalar()
+        )
 
     def quantity_total(self):
-        return db.session.query(db.func.sum(Order_Item.quantity)).filter(Order_Item.order_id == self.id).scalar()
-
+        return (
+            db.session.query(db.func.sum(Order_Item.quantity))
+            .filter(Order_Item.order_id == self.id)
+            .scalar()
+        )
 
     def __repr__(self):
         return "<Order de nome {} do usuário de id {}".format(self.name, self.user_id)
