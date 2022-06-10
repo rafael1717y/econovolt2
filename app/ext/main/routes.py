@@ -1,16 +1,8 @@
 import pdb
 from datetime import datetime
 
-from flask import (
-    current_app,
-    flash,
-    g,
-    jsonify,
-    redirect,
-    render_template,
-    request,
-    url_for,
-)
+from flask import (current_app, flash, g, jsonify, redirect, render_template,
+                   request, url_for)
 from flask_login import current_user, login_required
 
 from app import db

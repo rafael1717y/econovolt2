@@ -3,14 +3,8 @@ from typing import Text
 from flask import request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
-from wtforms import (
-    HiddenField,
-    IntegerField,
-    SelectField,
-    StringField,
-    SubmitField,
-    TextAreaField,
-)
+from wtforms import (HiddenField, IntegerField, SelectField, StringField,
+                     SubmitField, TextAreaField)
 from wtforms.validators import DataRequired, ValidationError
 
 

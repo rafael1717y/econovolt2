@@ -1,4 +1,5 @@
-from .main import bp  # 1. importação do blueprint do arquivo site da pasta main
+from .main import \
+    bp  # 1. importação do blueprint do arquivo site da pasta main
 
 
 def init_app(app):
