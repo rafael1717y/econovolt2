@@ -1,5 +1,3 @@
-from email.errors import FirstHeaderLineIsContinuationDefect
-
 from flask import Markup, flash
 from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView, filters

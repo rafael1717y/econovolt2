@@ -1,10 +1,9 @@
 import datetime
-from datetime import datetime
 from hashlib import md5
 from time import time
 
 import jwt
-from flask import current_app, url_for
+from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -20,9 +19,6 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     admin = db.Column(db.Boolean)
     simulacoes = db.relationship("Order", backref="author", lazy="dynamic")
-
-    def __repr__(self):
-        return "<User {}>".format(self.username)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

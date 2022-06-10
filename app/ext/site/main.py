@@ -2,20 +2,38 @@ import os
 import pdb
 import random
 
-from flask import (Blueprint, current_app, escape, flash, jsonify, redirect,
-                   render_template, request, session, url_for)
+from flask import (
+    Blueprint,
+    current_app,
+    escape,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 
-from app import email
 from app.email import send_password_reset_email
-from app.ext.auth.forms import (LoginForm, RegistrationForm, ResetPasswordForm,
-                                ResetPasswordRequestForm)
+from app.ext.auth.forms import (
+    LoginForm,
+    RegistrationForm,
+    ResetPasswordForm,
+    ResetPasswordRequestForm,
+)
 from app.ext.auth.models import Item, Order, Order_Item, User
 from app.ext.db import db
-from app.ext.main.forms import (AddItem, AddToSimulator, Checkout,
-                                InfoUserForm, NewSimulationForm)
+from app.ext.main.forms import (
+    AddItem,
+    AddToSimulator,
+    Checkout,
+    InfoUserForm,
+    NewSimulationForm,
+)
 
 """
 1. Criação de um blueprint em main [nome + path import.] para componentização
@@ -289,7 +307,8 @@ def remove(index):
 @bp.route("/checkout", methods=["GET", "POST"])
 def checkout():
 
-    # o = Order(reference='23223', name='teste', state='MG', dealership='Cemig', items=[oi], user=u)
+    # o = Order(reference='23223', name='teste', state='MG',
+    # dealership='Cemig', items=[oi], user=u)
     form = Checkout()
 
     if form.validate_on_submit():

@@ -1,10 +1,8 @@
 import os
-from threading import Thread
 
-from flask import current_app, render_template
+from flask import render_template
 from flask_mail import Message
 
-from app.ext.auth import models
 from app.ext.mail import mail
 
 

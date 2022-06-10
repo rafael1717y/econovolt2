@@ -1,8 +1,4 @@
-import pdb
-from datetime import datetime
-
-from flask import (current_app, flash, g, jsonify, redirect, render_template,
-                   request, url_for)
+from flask import flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from app import db
@@ -48,7 +44,8 @@ def user(username):
     for i in all:
         print("Id do item >>", i.id)
         print("Nome do item >>", i.item)
-        # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
+        # P/teste: multiplicando apenas  potência x número de horas
+        # [tempo de uso] x quantidade
         valor_parcial = i.potency * i.time_of_use * i.quantity
         print("Valor parcial >>>", valor_parcial)
         valor_total.append(valor_parcial)
@@ -62,7 +59,8 @@ def user(username):
 @login_required  # um usuário logado pode ver sua simulação
 @bp.route("/simulations")
 def simulations():
-    # return render_template(url_for('simulations', title='Simulações', simulations=simulations))
+    # return render_template(url_for('simulations', title='Simulações',
+    # simulations=simulations))
     return render_template("simulations.html", title="Simulações")
 
 
@@ -74,14 +72,15 @@ def process():
     name = request.form["name"]
     print("linha 135", email)
     print("linha 136", name)
-    if name and email:  ## validac e calc aqui >> simulacoes >> resultado no final
+    if name and email:  ## validac e calc aqui
         msg = "Dados incluídos com sucesso. "
         # guardar(email)
         return jsonify({"name": name, "email": email, "msg": msg})
     return jsonify({"error": "Faltando dados!"})
 
 
-# 2. Exibe o resultado das simulações após cálculo método para calcular custo na classe Simulation]
+# 2. Exibe o resultado das simulações após cálculo método para calcular
+# custo na classe Simulation]
 @bp.route("/display_simulations", methods=["GET", "POST"])
 @login_required
 def display_simulations():
@@ -96,7 +95,8 @@ def display_simulations():
         print("Id do item >>", i.id)
         print("Nome do item >>", i.item)
         # print("Timestamp >>", i.timestamp)
-        # P/teste: multiplicando apenas  potência x número de horas [tempo de uso] x quantidade
+        # P/teste: multiplicando apenas  potência x
+        # número de horas [tempo de uso] x quantidade
         valor_parcial = i.potency * i.time_of_use * i.quantity
         print("Valor parcial >>>", valor_parcial)
         valor_total.append(valor_parcial)
