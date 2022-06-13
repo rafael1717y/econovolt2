@@ -1,4 +1,6 @@
 ### Projeto Integrador II - Univesp 1o. Semestre/22
+[![CI](https://github.com/rafael1717y/econovolt2/actions/workflows/main.yml/badge.svg)](https://github.com/rafael1717y/econovolt2/actions/workflows/main.yml)
+
 
 Um simulador de consumo de energia elétrica.
 
