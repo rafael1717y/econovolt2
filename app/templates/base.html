@@ -34,10 +34,6 @@
 </script>
 
 
-
-
-
-
     {% endblock head %}
 
     {% block extra_css %} 
@@ -55,7 +51,7 @@
     {% if admin %}
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
+                
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -66,7 +62,7 @@
                     <a class="navbar-brand" href="../">Econovolt</a>
                 </div>
         
-                <!-- Collect the nav links, forms, and other content for toggling -->
+               
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
@@ -114,12 +110,13 @@
           </a>
     
           <a class="navbar-item" href="{{ url_for('site.new_simulation') }}" title="Faça login para realizar uma simulação do seu consumo de energia elétrica" tabindex="1">
-            Simular
+            Realize uma simulação
           </a>
-    
+          {% if current_user.is_authenticated %}
           <a class="navbar-item" href="{{ url_for('site.simulator') }}" title="Verifique os itens incluídos na simulação" tabindex="2">
-            Itens incluídos na simulação
+            Veja os itens incluídos no simulador
           </a>
+          {% endif %}
     
 
           <div class="navbar-item has-dropdown is-hoverable" tabindex="3">
