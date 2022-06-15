@@ -1,0 +1,20 @@
+ports:
+  - port: 5000
+    onOpen: open-preview
+
+tasks:
+  - before: |
+      export FLASK_ENV=development
+      export FLASK_SECRET_KEY=uma-senha-secreta
+    init: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    command: |
+      flask run
+
+vscode:
+  extensions:
+    - ms-python.python
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-renderers
+    - ms-toolsai.jupyter-keymap

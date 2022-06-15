@@ -34,15 +34,10 @@ nosetests.xml
 .pydevproject
 
 app.db
-econovolt.log*
-anot.txt
 pendencias.txt
 .secrets
 .secrets.toml
 .flaskenv
-.log 
- *.log
-.log
 .env
 /**.secrets.*
 /**anot.txt.*
@@ -53,7 +48,6 @@ instance/
 .webassets-cache
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -65,10 +59,8 @@ venv.bak/
 htmlcov/
 .tox/
 .nox/
-.coverage
 .coverage.*
 .cache
-nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
@@ -81,3 +73,5 @@ cover/
 
 ### VS Code ###
 .vscode/
+
+*.log
