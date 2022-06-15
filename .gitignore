@@ -33,7 +33,6 @@ nosetests.xml
 .project
 .pydevproject
 
-venv
 app.db
 econovolt.log*
 anot.txt
@@ -42,12 +41,43 @@ pendencias.txt
 .secrets.toml
 .flaskenv
 .log 
-.vscode
  *.log
 .log
 .env
 /**.secrets.*
 /**anot.txt.*
 /**.txt.*
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Environments
+.env
 .venv
-/venv 
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+### IntelliJ IDEA ###
+.idea/
+
+### VS Code ###
+.vscode/
