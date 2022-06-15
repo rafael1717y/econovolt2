@@ -62,6 +62,11 @@ def about():
     return render_template("about.html")
 
 
+@bp.route("/dicas")
+def dicas():
+    return render_template("dicas.html")
+
+
 @bp.route("/simulations")
 def simulations():
     return render_template("simulations.html")
