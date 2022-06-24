@@ -67,9 +67,4 @@ def test_url_for_about(client):
     assert client.get(url_for("site.about", external=True)).status_code == 200
 
 
-def test_visualizacao_de_simulacao_nao_visivel_na_home(client):
-    assert client.get(url_for("site.simulator", external=True)).status_code != 200
 
-
-def test_url_login(client):
-    assert client.get(url_for("site.login", external=True)).status_code == 200
