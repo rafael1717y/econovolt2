@@ -49,4 +49,12 @@ jobs:
             pip install -r requirements.txt
             
       - name: tests
-        run: python -m pytest tests/ -v
+        run: python -m pytest tests/ -v --junitxml=test-result.xml
+      - name: publish junit results 
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: test-result.xml
+          check_name: Test Result (Python ${{matrix.python-version}})
+
+          
