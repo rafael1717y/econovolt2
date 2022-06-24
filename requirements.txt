@@ -14,7 +14,6 @@ decorator==5.1.1
 dnspython==2.2.1
 dominate==2.6.0
 dynaconf==3.1.8
--e git+https://github.com/rafael1717y/econovolt2.git@f514c59a4ea4a9f15847b8a2de5bf0535afb8996#egg=econovolt
 email-validator==1.2.1
 executing==0.8.3
 flake8==4.0.1
