@@ -14,13 +14,12 @@ clean:
 install:
 	pip install -e .['dev']
 
-
 init_db:
 	FLASK_APP=econovolt.py flask create-db
 	FLASK_APP=econovolt.py flask db upgrade
 
 test:
-	FLASK_ENV=test pytest tests/ -v --cov=delivery
+	FLASK_ENV=test pytest tests/ -v --cov=app
 
 format:
 	isort **/*.py
