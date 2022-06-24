@@ -1,7 +1,7 @@
 [default]
 DEBUG = false
 FLASK_ADMIN_SWATCH = "cerulean"
-ADMIN_NAME = "Econovolt [Projeto Integrador]"
+ADMIN_NAME = "Econovolt [Projeto Integrador - Grupo 63]"
 ADMIN_TEMPLATE_MODE = "bootstrap2"
 EXTENSIONS = [
     "app.ext.db:init_app",
@@ -25,7 +25,8 @@ EXTENSIONS = [
     "app.ext.auth:init_app", 
     "app.ext.admin:init_app", 
     "app.ext.migrate:init_app", 
-    "app.ext.cli:init_app",  
+    "app.ext.cli:init_app",
+    "app.ext.toolbar:init_app", 
     "app.ext.site:init_app",  
     "app.ext.mail:init_app",  
 ]
