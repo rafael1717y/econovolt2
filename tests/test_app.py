@@ -1,5 +1,3 @@
-from app.ext.auth.models import User
-
 
 def test_app_is_created(app):  # app recebido por injeção de dependência
     """Testa se o app foi criado."""
@@ -17,10 +15,3 @@ def test_request_returns_404(client):
 
 def test_request_return_200(client):
     assert client.get("/").status_code == 200
-
-
-def test_password_hashing(app):
-    u = User(username="susan55")
-    u.set_password("senha123")
-    assert u.check_password("senha123") == True
-    assert u.check_password("senha124") == False
