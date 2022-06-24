@@ -1,8 +1,10 @@
-from app.ext.auth.models import User
+def test_ehlo(smtp_connection):
+    response, msg = smtp_connection.ehlo()
+    assert response == 250
 
-
+""""
 def test_app_is_created(app):  # app recebido por injeção de dependência
-    """Testa se o app foi criado."""
+    #Testa se o app foi criado.
     assert app.name == "app"
 
 
@@ -17,10 +19,4 @@ def test_request_returns_404(client):
 
 def test_request_return_200(client):
     assert client.get("/").status_code == 200
-
-
-def test_password_hashing(app):
-    u = User(username="susan55")
-    u.set_password("senha123")
-    assert u.check_password("senha123") == True
-    assert u.check_password("senha124") == False
+"""

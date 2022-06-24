@@ -1,5 +1,3 @@
-from audioop import add
-
 from app.ext.admin import admin as main_admin
 from app.ext.auth import models
 from app.ext.auth.admin import UserAdmin
