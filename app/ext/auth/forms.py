@@ -2,8 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
-from app.ext.auth.models import \
-    User  # importe da classe User de models da extensão de autenticação
+from app.ext.auth.models import (
+    User,
+)  # importe da classe User de models da extensão de autenticação
 
 
 class LoginForm(FlaskForm):

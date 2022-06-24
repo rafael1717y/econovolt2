@@ -65,6 +65,3 @@ def test_avatar_rafael_incorreto(app):
 def test_url_for_about(client):
     """Test da página de sobre."""
     assert client.get(url_for("site.about", external=True)).status_code == 200
-
-
-

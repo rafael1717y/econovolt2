@@ -2,19 +2,38 @@ import os
 import pdb
 import random
 
-from flask import (Blueprint, current_app, escape, flash, jsonify, redirect,
-                   render_template, request, session, url_for)
+from flask import (
+    Blueprint,
+    current_app,
+    escape,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 
 from app.email import send_password_reset_email
-from app.ext.auth.forms import (LoginForm, RegistrationForm, ResetPasswordForm,
-                                ResetPasswordRequestForm)
+from app.ext.auth.forms import (
+    LoginForm,
+    RegistrationForm,
+    ResetPasswordForm,
+    ResetPasswordRequestForm,
+)
 from app.ext.auth.models import Item, Order, Order_Item, User
 from app.ext.db import db
-from app.ext.main.forms import (AddItem, AddToSimulator, Checkout,
-                                InfoUserForm, NewSimulationForm)
+from app.ext.main.forms import (
+    AddItem,
+    AddToSimulator,
+    Checkout,
+    InfoUserForm,
+    NewSimulationForm,
+)
 
 """
 1. Criação de um blueprint em main [nome + path import.] para componentização
@@ -163,8 +182,7 @@ def user(username):
 
 
 # Logs
-
-
+# ---
 def log_request(req, res):
     with open("econovoltt.log", "a") as log:
         print(req.form, req.remote_addr, req.user_agent, res, file=log, sep="|")
@@ -326,8 +344,6 @@ def checkout():
 
 
 # Visualizar ordens de um usuário
-
-
 @bp.route("/view", methods=["GET", "POST"])
 def view():
     # user = current_user
@@ -361,7 +377,6 @@ def admin():
     orders = Order.query.all()
     # orders = Order.query.filter_by(id=id)
     # item = Item.query.filter_by(id=id).first()
-
     return render_template("admin/index.html", admin=True, items=items, orders=orders)
 
 
@@ -378,7 +393,6 @@ def add():
         print(form.average_daily_use_minutes.data)
         print(form.average_power.data)
         print(form.description.data)
-
         ## observar esta com itens [unique]
         new_item = Item(
             name=form.name.data,
@@ -388,7 +402,6 @@ def add():
             average_power=form.average_power.data,
             description=form.description.data,
         )
-
         db.session.add(new_item)
         db.session.commit()
         print("linha 255")

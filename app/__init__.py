@@ -39,5 +39,5 @@ def create_app():
         file_handler.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
         app.logger.setLevel(logging.INFO)
-        app.logger.info(">>> A aplicação iniciou...")
+        app.logger.info(">>> Iniciou >>>...")
     return app
