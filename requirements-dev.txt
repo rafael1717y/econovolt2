@@ -1,0 +1,8 @@
+pytest
+isort
+black
+ipdb
+ipython
+pytest-flask
+flake8
+pytest-cov

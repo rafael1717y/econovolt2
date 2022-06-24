@@ -1,0 +1,124 @@
+2022-06-09 13:36:47,361  app  ERRORl:1455 f:app.py: Exception on /checkout [POST]
+Traceback (most recent call last):
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.StringDataRightTruncation: value too long for type character varying(7)
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/rafael/Documents/Development/econovolt2/app/ext/site/main.py", line 327, in checkout
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1435, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3367, in flush
+    self._flush(objects)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3506, in _flush
+    with util.safe_reraise():
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3467, in _flush
+    flush_context.execute()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    _emit_insert_statements(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py", line 1238, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1631, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1498, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1862, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2043, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.errors.StringDataRightTruncation) value too long for type character varying(7)
+
+[SQL: INSERT INTO "order" (reference, name, state, dealership, user_id) VALUES (%(reference)s, %(name)s, %(state)s, %(dealership)s, %(user_id)s) RETURNING "order".id]
+[parameters: {'reference': 'CEBCECBAEE', 'name': 'teste', 'state': 'MG', 'dealership': 'Cemig', 'user_id': None}]
+(Background on this error at: https://sqlalche.me/e/14/9h9h)
+2022-06-09 13:38:28,379  app  INFOl:40 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:12:26,620  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:14:03,501  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:15:21,593  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:16:09,418  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:16:36,559  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:16:50,320  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:16:50,544  app  ERRORl:1455 f:app.py: Exception on /view [GET]
+Traceback (most recent call last):
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: order
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/rafael/Documents/Development/econovolt2/app/ext/site/main.py", line 354, in view
+    order = Order.query.all()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2768, in all
+    return self._iter().all()
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2903, in _iter
+    result = self.session.execute(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1696, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1631, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1498, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1862, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2043, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/rafael/Documents/Development/econovolt2/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: order
+[SQL: SELECT "order".id AS order_id, "order".reference AS order_reference, "order".name AS order_name, "order".state AS order_state, "order".dealership AS order_dealership, "order".user_id AS order_user_id 
+FROM "order"]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2022-06-23 22:17:02,454  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
+2022-06-23 22:19:48,438  app  INFOl:42 f:__init__.py: >>> A aplicação iniciou...
