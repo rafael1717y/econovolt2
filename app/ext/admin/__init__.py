@@ -22,4 +22,4 @@ def init_app(app):
     admin.add_view(ModelView(Item, db.session))
     admin.add_view(ModelView(Order, db.session))
     admin.add_view(ModelView(Order_Item, db.session))
-    # admin.init_app(app)
+    admin.init_app(app)
