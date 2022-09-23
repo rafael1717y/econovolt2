@@ -13,7 +13,7 @@ coverage==6.4.1
 decorator==5.1.1
 dnspython==2.2.1
 dominate==2.6.0
-dynaconf==3.1.8
+dynaconf==3.1.11
 email-validator==1.2.1
 executing==0.8.3
 ez-setup==0.9
